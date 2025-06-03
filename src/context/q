@@ -1,6 +1,6 @@
 {/* View Controls */}
         <motion.div
-          className="absolute inset-0 bg-black/60 flex items-center justify-center gap-4"
+          className="absolute inset-0 bg-white/80 flex items-center justify-center gap-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.2 }}

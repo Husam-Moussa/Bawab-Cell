@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase/config';
 import Loader from './Loader';
 import Footer from './Footer';
-import { staticProducts } from '../data/staticProducts';
 import { useNavigate } from 'react-router-dom';
 
 // Add new Particle component
@@ -61,7 +58,7 @@ const FloatingIcon = ({ children, delay }) => {
 const FilterButton = ({ isOpen, onClick }) => (
   <motion.button
     onClick={onClick}
-    className="bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl p-3 text-lime-500 hover:bg-lime-500/10"
+    className="bg-emerald-600 text-white rounded-lg p-3 hover:bg-emerald-500 transition-colors"
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
   >
@@ -105,10 +102,10 @@ const SearchBar = ({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="Search products..."
-            className="w-full bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-lime-500 pr-12"
+            className="w-full bg-white border border-emerald-200 rounded-xl px-6 py-4 text-emerald-600 placeholder-gray-400 focus:outline-none focus:border-emerald-500 pr-12"
           />
           <motion.div 
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-lime-500"
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white text-emerald-600 rounded-lg p-1 flex items-center justify-center hover:bg-gray-100 transition-colors cursor-pointer"
             animate={{ 
               scale: [1, 1.1, 1],
               rotate: [0, 10, 0]
@@ -133,12 +130,12 @@ const SearchBar = ({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="mt-4 bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl p-6 overflow-hidden"
+            className="absolute left-0 right-0 mt-4 bg-emerald-50 backdrop-blur border border-emerald-200 rounded-xl p-6 overflow-hidden z-10"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Categories */}
               <div>
-                <h3 className="text-white font-semibold mb-4">Categories</h3>
+                <h3 className="text-emerald-800 font-semibold mb-4">Categories</h3>
                 <div className="flex flex-wrap gap-2">
                   {categories.map((category) => (
                     <motion.button
@@ -148,8 +145,8 @@ const SearchBar = ({
                       whileTap={{ scale: 0.95 }}
                       className={`px-4 py-2 rounded-lg text-sm font-semibold ${
                         selectedCategory === category
-                          ? 'bg-lime-500 text-black'
-                          : 'bg-black/50 text-gray-300 hover:text-lime-500 border border-lime-500/20'
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-white text-emerald-600 hover:bg-emerald-100 border border-emerald-200'
                       }`}
                     >
                       {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -160,7 +157,7 @@ const SearchBar = ({
 
               {/* Sort Options */}
               <div>
-                <h3 className="text-white font-semibold mb-4">Sort By</h3>
+                <h3 className="text-emerald-800 font-semibold mb-4">Sort By</h3>
                 <div className="flex flex-wrap gap-2">
                   {[
                     { value: 'featured', label: 'Featured' },
@@ -175,8 +172,8 @@ const SearchBar = ({
                       whileTap={{ scale: 0.95 }}
                       className={`px-4 py-2 rounded-lg text-sm font-semibold ${
                         sortBy === option.value
-                          ? 'bg-lime-500 text-black'
-                          : 'bg-black/50 text-gray-300 hover:text-lime-500 border border-lime-500/20'
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-white text-emerald-600 hover:bg-emerald-100 border border-emerald-200'
                       }`}
                     >
                       {option.label}
@@ -526,27 +523,29 @@ const ProductIcons = ({ category, rating, stock }) => {
 
 // Update the ProductCard component
 const ProductCard = ({ product, onQuickView, onAddToCart }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [activeView, setActiveView] = useState(null);
   const [selectedFlavor, setSelectedFlavor] = useState(product.flavors?.[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0]);
-  const [tiltValues, setTiltValues] = useState({ x: 0, y: 0 });
   const [addToCartClicked, setAddToCartClicked] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
-  const handleMouseMove = (e) => {
-    if (!isHovered) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTiltValues({ x: x * 20, y: y * -20 });
-  };
-
   const handleProductClick = () => {
-    // On mobile and tablet, navigate to product details
-    if (window.innerWidth < 1024) {
-      navigate(`/product/${product.id}`, { state: { product } });
-    }
+    navigate(`/product/${product.id}`, { 
+      state: { 
+        product: {
+          ...product,
+          colors: product.colors || [],
+          storage: product.storage || [],
+          storagePrices: product.storagePrices || {},
+          benefits: product.features || [
+            'High Performance',
+            'Premium Quality',
+            'Latest Technology',
+            'Long Battery Life'
+          ]
+        }
+      } 
+    });
   };
 
   const handleAddToCart = (e) => {
@@ -557,242 +556,114 @@ const ProductCard = ({ product, onQuickView, onAddToCart }) => {
       flavor: selectedFlavor, 
       size: selectedSize 
     });
-    
-    // Add ripple effect animation
+    // Ripple effect
     const button = e.currentTarget;
     const circle = document.createElement('div');
     const diameter = Math.max(button.clientWidth, button.clientHeight);
     const radius = diameter / 2;
-
     circle.style.width = circle.style.height = `${diameter}px`;
     circle.style.left = `${e.clientX - button.offsetLeft - radius}px`;
     circle.style.top = `${e.clientY - button.offsetTop - radius}px`;
     circle.classList.add('ripple');
-
     const ripple = button.getElementsByClassName('ripple')[0];
     if (ripple) {
       ripple.remove();
     }
-
     button.appendChild(circle);
-
     setTimeout(() => setAddToCartClicked(false), 1000);
   };
 
-  // Add error handling for images
   const handleImageError = (e) => {
-    e.target.onerror = null; // Prevent infinite loop
-    e.target.src = "https://via.placeholder.com/300x300?text=Product+Image"; // Fallback image
+    e.target.onerror = null;
+    e.target.src = "https://via.placeholder.com/300x300?text=Product+Image";
   };
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      whileHover={{ y: -8 }}
-      style={{
-        transform: isHovered ? `perspective(1000px) rotateX(${tiltValues.y}deg) rotateY(${tiltValues.x}deg)` : 'none',
-        transition: 'transform 0.2s ease-out'
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setActiveView(null);
-        setTiltValues({ x: 0, y: 0 });
-      }}
+    <div
+      className="relative bg-gray-50 rounded-lg overflow-hidden cursor-pointer transform-gpu w-full min-h-[380px] shadow transition duration-200 group hover:shadow-xl hover:scale-[1.03]"
       onClick={handleProductClick}
-      className="relative bg-black/50 backdrop-blur border border-lime-500/20 rounded-lg overflow-hidden cursor-pointer transform-gpu"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Product Icons - Only visible on large screens */}
       <div className="hidden lg:block">
         <ProductIcons 
           category={product.category}
-          rating={product.rating}
           stock={product.stock}
         />
       </div>
-
-      {/* Training Type Indicators - Only visible on large screens */}
-      <div className="hidden lg:block">
-        <TrainingTypeIndicator types={product.trainingTypes || ['Strength', 'Muscle Gain']} />
-      </div>
-
       {/* Achievement Badge - Only visible on large screens */}
       {product.achievement && (
         <div className="hidden lg:block">
           <AchievementBadge achievement={product.achievement} />
         </div>
       )}
-
       {/* Product Image Container */}
-      <div className="relative aspect-square overflow-hidden">
-        <motion.img
+      <div className="relative aspect-square overflow-hidden bg-gray-50 flex items-center justify-center p-6">
+        <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover"
-          animate={{
-            scale: isHovered ? 1.15 : 1,
-            rotate: isHovered ? -1 : 0,
-          }}
-          transition={{ 
-            type: "spring",
-            stiffness: 200,
-            damping: 25
-          }}
+          className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
           onError={handleImageError}
         />
-        
-        {/* View Controls - Only visible on large screens */}
-        <div className="absolute inset-0 hidden lg:flex items-center justify-center gap-4 bg-black/60 opacity-0 hover:opacity-100 transition-opacity">
-          <motion.button
-            onClick={(e) => {
-              e.stopPropagation();
-              onQuickView(product);
-            }}
-            className="bg-lime-500 text-black px-4 py-2 rounded-lg font-semibold text-sm"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Quick View
-          </motion.button>
-          <motion.button
-            onClick={(e) => {
-              e.stopPropagation();
-              setActiveView(activeView === 'nutrition' ? null : 'nutrition');
-            }}
-            className={`backdrop-blur text-white px-4 py-2 rounded-lg font-semibold text-sm ${
-              activeView === 'nutrition' ? 'bg-lime-500 text-black' : 'bg-white/20'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Nutrition
-          </motion.button>
-          <motion.button
-            onClick={(e) => {
-              e.stopPropagation();
-              setActiveView(activeView === 'benefits' ? null : 'benefits');
-            }}
-            className={`backdrop-blur text-white px-4 py-2 rounded-lg font-semibold text-sm ${
-              activeView === 'benefits' ? 'bg-lime-500 text-black' : 'bg-white/20'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Benefits
-          </motion.button>
-        </div>
-
-        {/* Overlays - Only visible on large screens */}
-        <div className="hidden lg:block">
-          <AnimatePresence>
-            {activeView === 'nutrition' && (
-              <NutritionInfo nutrition={product.nutrition} />
-            )}
-            {activeView === 'benefits' && (
-              <ProductBenefits benefits={product.benefits || [
-                'Enhances Muscle Growth',
-                'Improves Recovery Time',
-                'Increases Strength',
-                'Supports Lean Mass'
-              ]} />
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Mobile Price Tag - Always visible */}
-        <motion.div
-          className="absolute top-2 right-2 bg-black/80 backdrop-blur-sm text-lime-500 px-3 py-1 rounded-full text-sm font-bold"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          whileHover={{ scale: 1.1 }}
-        >
-          ${product.price}
-        </motion.div>
       </div>
-
+      {/* Animated Features (desktop only, above info section) */}
+      <div className="hidden lg:block">
+        <AnimatePresence>
+          {isHovered && Array.isArray(product.features) && product.features.length > 0 && (
+            <motion.ul
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={{
+                visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+                hidden: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
+              }}
+              className="absolute left-0 right-0 top-0 z-20 flex flex-col items-center pt-4"
+            >
+              {product.features.map((feature, idx) => (
+                <motion.li
+                  key={idx}
+                  className="text-emerald-700 bg-white/80 rounded px-3 py-1 mb-1 text-sm font-medium shadow"
+                  variants={{
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+                >
+                  {feature}
+                </motion.li>
+              ))}
+            </motion.ul>
+          )}
+        </AnimatePresence>
+      </div>
       {/* Product Info */}
-      <motion.div 
-        className="p-4 space-y-2 relative"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-      >
-        <div className="flex items-center justify-between">
-          <motion.span 
-            className="text-lime-500 text-xs font-medium"
-            whileHover={{ scale: 1.1 }}
-            animate={{
-              x: isHovered ? 3 : 0
-            }}
-          >
-            {product.category}
-          </motion.span>
-          <motion.div 
-            className="flex items-center gap-1"
-            animate={{
-              scale: isHovered ? 1.1 : 1
-            }}
-          >
-            {[...Array(5)].map((_, index) => (
-              <motion.span
-                key={index}
-                className={index < Math.floor(product.rating) ? 'text-yellow-500' : 'text-gray-400'}
-                animate={{
-                  scale: isHovered && index < Math.floor(product.rating) ? [1, 1.2, 1] : 1,
-                  rotate: isHovered && index < Math.floor(product.rating) ? [0, 10, -10, 0] : 0
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                  repeat: isHovered ? Infinity : 0,
-                  repeatType: "reverse"
-                }}
-              >
-                ★
-              </motion.span>
-            ))}
-          </motion.div>
+      <div className="p-0">
+        <div className="bg-white rounded-b-lg px-4 pt-4 pb-3 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-emerald-600 text-xs font-medium">
+              {product.category}
+            </span>
+          </div>
+          <h3 className="text-sm font-bold text-black line-clamp-1">
+            {product.name}
+          </h3>
+          <p className="text-gray-400 text-xs line-clamp-2">
+            {product.description}
+          </p>
+          {/* Price above Add to Cart */}
+          <div className="text-green-600 font-bold text-lg mb-2">${product.price}</div>
         </div>
-
-        <motion.h3
-          className="text-sm font-bold text-white line-clamp-1"
-          animate={{ 
-            y: isHovered ? -2 : 0,
-            color: isHovered ? "#84cc16" : "#ffffff"
-          }}
-        >
-          {product.name}
-        </motion.h3>
-
-        <motion.p 
-          className="text-gray-400 text-xs line-clamp-2"
-          animate={{ 
-            opacity: isHovered ? 0.9 : 0.7,
-            y: isHovered ? 2 : 0
-          }}
-        >
-          {product.description}
-        </motion.p>
-
         {/* Add to Cart Button */}
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={handleAddToCart}
-          className="w-full bg-lime-500 text-black py-2 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 relative overflow-hidden"
-          animate={addToCartClicked ? {
-            scale: [1, 0.9, 1.1, 1],
-            transition: { duration: 0.4 }
-          } : {}}
+        <button
+          onClick={e => { e.stopPropagation(); handleAddToCart(e); }}
+          className="w-full bg-emerald-600 text-white py-2 rounded-b-lg text-sm font-semibold flex items-center justify-center gap-2 relative overflow-hidden transition-all duration-200 group-hover:bg-emerald-700 group-hover:scale-[1.03]"
         >
           Add to Cart
-        </motion.button>
-      </motion.div>
-    </motion.div>
+        </button>
+      </div>
+    </div>
   );
 };
 
@@ -850,20 +721,6 @@ const QuickViewModal = ({ product, onClose, onAddToCart }) => {
               <h2 className="text-3xl font-bold text-white mb-2">{product.name}</h2>
               <div className="flex items-center gap-4 mb-4">
                 <span className="text-2xl font-bold text-lime-500">${product.price}</span>
-                <div className="flex items-center text-yellow-500">
-                  {[...Array(5)].map((_, i) => (
-                    <motion.span
-                      key={i}
-                      animate={{
-                        scale: i < Math.floor(product.rating) ? [1, 1.2, 1] : 1
-                      }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
-                    >
-                      ★
-                    </motion.span>
-                  ))}
-                  <span className="ml-2 text-gray-400">({product.rating})</span>
-                </div>
               </div>
               <p className="text-gray-400">{product.description}</p>
             </div>
@@ -954,10 +811,10 @@ const QuickViewModal = ({ product, onClose, onAddToCart }) => {
                     className="space-y-4"
                   >
                     {(product.benefits || [
-                      'Enhances Muscle Growth',
-                      'Improves Recovery Time',
-                      'Increases Strength',
-                      'Supports Lean Mass'
+                      'Enhances Mobile Experience',
+                      'Long Battery Life',
+                      'High-Resolution Display',
+                      'Fast Performance'
                     ]).map((benefit, index) => (
                       <motion.div
                         key={benefit}
@@ -1046,59 +903,6 @@ const QuickViewModal = ({ product, onClose, onAddToCart }) => {
   );
 };
 
-// Add new Pagination component
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  return (
-    <div className="flex justify-center items-center gap-2 mt-8">
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className={`px-4 py-2 rounded-lg text-sm font-semibold ${
-          currentPage === 1
-            ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-            : 'bg-black/50 text-white hover:bg-lime-500/20 border border-lime-500/20'
-        }`}
-      >
-        Previous
-      </motion.button>
-      
-      <div className="flex gap-2">
-        {[...Array(totalPages)].map((_, index) => (
-          <motion.button
-            key={index + 1}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => onPageChange(index + 1)}
-            className={`w-10 h-10 rounded-lg text-sm font-semibold flex items-center justify-center ${
-              currentPage === index + 1
-                ? 'bg-lime-500 text-black'
-                : 'bg-black/50 text-white hover:bg-lime-500/20 border border-lime-500/20'
-            }`}
-          >
-            {index + 1}
-          </motion.button>
-        ))}
-      </div>
-
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className={`px-4 py-2 rounded-lg text-sm font-semibold ${
-          currentPage === totalPages
-            ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-            : 'bg-black/50 text-white hover:bg-lime-500/20 border border-lime-500/20'
-        }`}
-      >
-        Next
-      </motion.button>
-    </div>
-  );
-};
-
 // Add Toast component
 const Toast = ({ message, isVisible, onHide }) => {
   useEffect(() => {
@@ -1146,15 +950,15 @@ const AnimatedBackground = () => {
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
       {/* Gradient Base */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black">
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white">
         <motion.div
           className="absolute inset-0 opacity-30"
           animate={{
             background: [
-              'radial-gradient(circle at 0% 0%, #00ff8822 0%, transparent 50%)',
-              'radial-gradient(circle at 100% 100%, #00ff8822 0%, transparent 50%)',
-              'radial-gradient(circle at 0% 100%, #00ff8822 0%, transparent 50%)',
-              'radial-gradient(circle at 100% 0%, #00ff8822 0%, transparent 50%)',
+              'radial-gradient(circle at 0% 0%, #34d39922 0%, transparent 50%)',
+              'radial-gradient(circle at 100% 100%, #34d39922 0%, transparent 50%)',
+              'radial-gradient(circle at 0% 100%, #34d39922 0%, transparent 50%)',
+              'radial-gradient(circle at 100% 0%, #34d39922 0%, transparent 50%)',
             ]
           }}
           transition={{
@@ -1277,70 +1081,282 @@ const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('default');
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   
   const { addToCart } = useCart();
-  const productsPerPage = 10;
+  const navigate = useNavigate();
 
-  // Firebase listener effect
-  useEffect(() => {
-    const productsRef = collection(db, 'products');
-    const unsubscribe = onSnapshot(productsRef, 
-      (snapshot) => {
-        const dynamicProducts = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        // Combine dynamic and static products
-        const allProducts = [...dynamicProducts, ...staticProducts];
-        console.log('Fetched products:', allProducts);
-        setProducts(allProducts);
-        setFilteredProducts(allProducts);
-        setLoading(false);
+  // Update import path for product data
+  const localProducts = [
+    {
+      id: 1,
+      name: 'iPhone 16 Pro',
+      description: 'Latest iPhone with advanced features and titanium design',
+      price: 999.99,
+      category: 'Phones',
+      image: '/AppleProducts/IPHONE 16 PRO BLACK.png',
+      stock: 50,
+      features: ['5G', 'A18 Bionic', 'Pro Camera System'],
+      colors: ['Black', 'Titanium', 'Desert'],
+      colorImages: {
+        'Black': '/AppleProducts/IPHONE 16 PRO BLACK.png',
+        'Titanium': '/AppleProducts/IPHONE 16 PRO TITANIUM.png',
+        'Desert': '/AppleProducts/IPHONE 16 PRO DESSERT.png'
       },
-      (error) => {
-        console.error('Error fetching products:', error);
-        // Even if dynamic products fail to load, show static products
-        setProducts(staticProducts);
-        setFilteredProducts(staticProducts);
-        setError('Failed to load some products');
-        setLoading(false);
+      storage: ['128GB', '256GB', '512GB', '1TB'],
+      storagePrices: {
+        '128GB': 999.99,
+        '256GB': 1099.99,
+        '512GB': 1299.99,
+        '1TB': 1499.99
+      },
+      specs: {
+        'Display': '6.7-inch Super Retina XDR display with ProMotion',
+        'Chip': 'A18 Pro chip with Neural Engine',
+        'Camera': '48MP Main + 12MP Ultra Wide + 12MP Telephoto',
+        'Battery': 'Up to 29 hours video playback',
+        'Water Resistance': 'IP68 rated',
+        'Operating System': 'iOS 18',
+        'Dimensions': '160.7 x 77.6 x 7.85 mm',
+        'Weight': '221g'
       }
-    );
+    },
+    {
+      id: 2,
+      name: 'iPhone 16',
+      description: 'Latest iPhone with advanced features',
+      price: 899.99,
+      category: 'Phones',
+      image: '/AppleProducts/IPHONE 16 WHITE.png',
+      stock: 45,
+      features: ['5G', 'A18 Bionic', 'Pro Camera System'],
+      colors: ['White', 'Teal', 'Ultramarine'],
+      colorImages: {
+        'White': '/AppleProducts/IPHONE 16 WHITE.png',
+        'Teal': '/AppleProducts/IPHONE 16 TEAL.png',
+        'Ultramarine': '/AppleProducts/IPHONE 16 ULTRAMARINE.png'
+      },
+      storage: ['128GB', '256GB', '512GB'],
+      storagePrices: {
+        '128GB': 899.99,
+        '256GB': 999.99,
+        '512GB': 1199.99
+      },
+      specs: {
+        'Display': '6.1-inch Super Retina XDR display',
+        'Chip': 'A18 Bionic chip with Neural Engine',
+        'Camera': '48MP Main + 12MP Ultra Wide',
+        'Battery': 'Up to 26 hours video playback',
+        'Water Resistance': 'IP68 rated',
+        'Operating System': 'iOS 18',
+        'Dimensions': '147.6 x 71.6 x 7.85 mm',
+        'Weight': '173g'
+      }
+    },
+    {
+      id: 3,
+      name: 'MacBook Air M3',
+      description: 'Powerful and lightweight laptop',
+      price: 1299.99,
+      category: 'Laptops',
+      image: '/AppleProducts/macbook_air_15_in_m3_space_gray_pdp_image_position_1__en-ae_2.png',
+      stock: 30,
+      features: ['M3 Chip', 'Retina Display', 'All-day Battery Life'],
+      colors: ['Space Gray', 'Silver', 'Starlight'],
+      colorImages: {
+        'Space Gray': '/AppleProducts/macbook_air_15_in_m3_space_gray_pdp_image_position_1__en-ae_2.png',
+        'Silver': '/AppleProducts/macbook_air_15_in_m3_silver_pdp_image_position_1__en-ae_2.png',
+        'Starlight': '/AppleProducts/macbook_air_15_in_m3_starlight_pdp_image_position_1__en-ae_2.png'
+      },
+      storage: ['256GB', '512GB', '1TB', '2TB'],
+      storagePrices: {
+        '256GB': 1299.99,
+        '512GB': 1499.99,
+        '1TB': 1699.99,
+        '2TB': 1899.99
+      },
+      specs: {
+        'Display': '15.3-inch Liquid Retina display',
+        'Chip': 'M3 chip with 8-core CPU and 10-core GPU',
+        'Memory': '8GB unified memory',
+        'Battery': 'Up to 18 hours battery life',
+        'Ports': 'MagSafe 3, 2x Thunderbolt 4, 3.5mm headphone jack',
+        'Operating System': 'macOS Sonoma',
+        'Dimensions': '340.4 x 237.6 x 11.5 mm',
+        'Weight': '1.51 kg'
+      }
+    },
+    {
+      id: 4,
+      name: 'iPad Pro M4',
+      description: 'Professional-grade tablet',
+      price: 899.99,
+      category: 'Tablets',
+      image: '/AppleProducts/ipad_pro_13_m4_wifi_silver_pdp_image_position_1b__en-me.png',
+      stock: 25,
+      features: ['M4 Chip', 'ProMotion Display', 'Apple Pencil Support'],
+      colors: ['Silver', 'Space Gray'],
+      colorImages: {
+        'Silver': '/AppleProducts/ipad_pro_13_m4_wifi_silver_pdp_image_position_1b__en-me.png',
+        'Space Gray': '/AppleProducts/ipad_pro_13_m4_wifi_space_black_pdp_image_position_1b__en-me.png'
+      },
+      storage: ['128GB', '256GB', '512GB', '1TB', '2TB'],
+      storagePrices: {
+        '128GB': 899.99,
+        '256GB': 999.99,
+        '512GB': 1199.99,
+        '1TB': 1399.99,
+        '2TB': 1599.99
+      },
+      specs: {
+        'Display': '12.9-inch Liquid Retina XDR display with ProMotion',
+        'Chip': 'M4 chip with Neural Engine',
+        'Camera': '12MP Wide + 10MP Ultra Wide',
+        'Battery': 'Up to 10 hours battery life',
+        'Ports': 'Thunderbolt 4, USB-C',
+        'Operating System': 'iPadOS 18',
+        'Dimensions': '280.6 x 214.9 x 5.9 mm',
+        'Weight': '682g'
+      }
+    },
+    {
+      id: 5,
+      name: 'Apple Watch Series 10',
+      description: 'Advanced health and fitness companion',
+      price: 399.99,
+      category: 'Watches',
+      image: '/AppleProducts/APPLE WATCH SERIES 10 BLACK.png',
+      stock: 40,
+      features: ['Heart Rate Monitor', 'GPS', 'Water Resistant'],
+      colors: ['Black', 'Rose Gold'],
+      colorImages: {
+        'Black': '/AppleProducts/APPLE WATCH SERIES 10 BLACK.png',
+        'Rose Gold': '/AppleProducts/APPLE WATCH SERIES 10 ROSEGOLD.png'
+      },
+      storage: ['32GB'],
+      storagePrices: {
+        '32GB': 399.99
+      },
+      specs: {
+        'Display': 'Always-On Retina display',
+        'Chip': 'S10 chip with Neural Engine',
+        'Sensors': 'Heart rate, Blood oxygen, ECG, Temperature',
+        'Battery': 'Up to 18 hours battery life',
+        'Water Resistance': 'Water resistant to 50 meters',
+        'Operating System': 'watchOS 11',
+        'Dimensions': '45 x 38 x 10.7 mm',
+        'Weight': '38.8g'
+      }
+    },
+    {
+      id: 6,
+      name: 'AirPods Pro',
+      description: 'Wireless earbuds with active noise cancellation',
+      price: 249.99,
+      category: 'Audio',
+      image: '/AppleProducts/airpods-3.png',
+      stock: 60,
+      features: ['Active Noise Cancellation', 'Spatial Audio', 'MagSafe Charging'],
+      colors: ['White'],
+      colorImages: {
+        'White': '/AppleProducts/airpods-3.png'
+      },
+      storage: ['Standard'],
+      storagePrices: {
+        'Standard': 249.99
+      },
+      specs: {
+        'Chip': 'H2 chip',
+        'Battery Life': 'Up to 6 hours listening time',
+        'Charging': 'MagSafe Charging Case',
+        'Connectivity': 'Bluetooth 5.3',
+        'Water Resistance': 'IPX4 rated',
+        'Features': 'Active Noise Cancellation, Transparency mode',
+        'Dimensions': '30.9 x 21.8 x 24.0 mm',
+        'Weight': '5.3g per earbud'
+      }
+    },
+    {
+      id: 7,
+      name: 'iPad Air',
+      description: 'Lightweight and powerful tablet',
+      price: 599.99,
+      category: 'Tablets',
+      image: '/AppleProducts/ipad_air_11_m2_wifi_starlight_pdp_image_position_1__en-ae_1_3.png',
+      stock: 35,
+      features: ['M2 Chip', 'Retina Display', 'Apple Pencil Support'],
+      colors: ['Starlight', 'Blue', 'Purple'],
+      colorImages: {
+        'Starlight': '/AppleProducts/ipad_air_11_m2_wifi_starlight_pdp_image_position_1__en-ae_1_3.png',
+        'Blue': '/AppleProducts/ipad_air_11_m2_wifi_blue_pdp_image_position_1__en-ae_2.png',
+        'Purple': '/AppleProducts/ipad_air_13_m2_wifi_purple_pdp_image_position_1b__en-ae_1.png'
+      },
+      storage: ['64GB', '256GB'],
+      storagePrices: {
+        '64GB': 599.99,
+        '256GB': 749.99
+      },
+      specs: {
+        'Display': '10.9-inch Liquid Retina display',
+        'Chip': 'M2 chip with Neural Engine',
+        'Camera': '12MP Wide camera',
+        'Battery': 'Up to 10 hours battery life',
+        'Ports': 'USB-C',
+        'Operating System': 'iPadOS 18',
+        'Dimensions': '247.6 x 178.5 x 6.1 mm',
+        'Weight': '461g'
+      }
+    },
+    {
+      id: 8,
+      name: 'Apple Watch SE',
+      description: 'Affordable smartwatch with essential features',
+      price: 279.99,
+      category: 'Watches',
+      image: '/AppleProducts/apple_watch_se_40mm_gps_starlight_aluminum_starlight_sport_band_pdp_image_position-1__en-me_1.png',
+      stock: 55,
+      features: ['Heart Rate Monitor', 'GPS', 'Water Resistant'],
+      colors: ['Starlight', 'Midnight'],
+      colorImages: {
+        'Starlight': '/AppleProducts/apple_watch_se_40mm_gps_starlight_aluminum_starlight_sport_band_pdp_image_position-1__en-me_1.png',
+        'Midnight': '/AppleProducts/apple_watch_se_40mm_gps_midnight_aluminum_sport_band_midnight_pdp_image_position_1__en-me.png'
+      },
+      storage: ['32GB'],
+      storagePrices: {
+        '32GB': 279.99
+      },
+      specs: {
+        'Display': 'Retina display',
+        'Chip': 'S9 chip',
+        'Sensors': 'Heart rate, Accelerometer, Gyroscope',
+        'Battery': 'Up to 18 hours battery life',
+        'Water Resistance': 'Water resistant to 50 meters',
+        'Operating System': 'watchOS 11',
+        'Dimensions': '40 x 34 x 10.7 mm',
+        'Weight': '30.5g'
+      }
+    }
+  ];
 
-    return () => unsubscribe();
+  // Use local product data
+  useEffect(() => {
+    setProducts(localProducts);
+    setFilteredProducts(localProducts);
+    setLoading(false);
   }, []);
 
   // Filter and sort effect
   useEffect(() => {
-    console.log('Filtering products:', {
-      searchTerm,
-      selectedCategory,
-      sortBy,
-      totalProducts: products.length
-    });
-
     const filtered = products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           (product.description && product.description.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesCategory = selectedCategory === 'all' || 
                             (product.category && product.category.toLowerCase() === selectedCategory.toLowerCase());
-      
-      console.log('Product filter check:', {
-        name: product.name,
-        category: product.category,
-        matchesSearch,
-        matchesCategory
-      });
-      
       return matchesSearch && matchesCategory;
     });
-
-    console.log('Filtered products:', filtered.length);
 
     const sorted = [...filtered].sort((a, b) => {
       switch (sortBy) {
@@ -1355,15 +1371,8 @@ const Shop = () => {
       }
     });
 
-    console.log('Sorted products:', sorted.length);
     setFilteredProducts(sorted);
-    setCurrentPage(1);
   }, [products, searchTerm, selectedCategory, sortBy]);
-
-  // Reset page effect
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, selectedCategory, sortBy]);
 
   const handleQuickView = (product) => {
     setSelectedProduct(product);
@@ -1376,11 +1385,6 @@ const Shop = () => {
     setShowToast(true);
   };
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   if (loading) {
     return <Loader />;
   }
@@ -1389,17 +1393,28 @@ const Shop = () => {
     return <div className="text-red-500 text-center p-4">{error}</div>;
   }
 
-  // Calculate pagination
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-  const startIndex = (currentPage - 1) * productsPerPage;
-  const endIndex = startIndex + productsPerPage;
-  const currentProducts = filteredProducts.slice(startIndex, endIndex);
-
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white text-gray-900">
       {/* Background Effects */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <AnimatedBackground />
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white">
+          <motion.div
+            className="absolute inset-0 opacity-30"
+            animate={{
+              background: [
+                'radial-gradient(circle at 0% 0%, #34d39922 0%, transparent 50%)',
+                'radial-gradient(circle at 100% 100%, #34d39922 0%, transparent 50%)',
+                'radial-gradient(circle at 0% 100%, #34d39922 0%, transparent 50%)',
+                'radial-gradient(circle at 100% 0%, #34d39922 0%, transparent 50%)',
+              ]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+          />
+        </div>
       </div>
 
       {/* Main Content */}
@@ -1423,7 +1438,7 @@ const Shop = () => {
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
         >
           <AnimatePresence mode="wait">
-            {currentProducts.map((product) => (
+            {filteredProducts.map((product) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -1441,46 +1456,37 @@ const Shop = () => {
           </AnimatePresence>
         </motion.div>
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        )}
+        {/* Quick View Modal */}
+        <AnimatePresence>
+          {selectedProduct && (
+            <QuickViewModal
+              product={selectedProduct}
+              onClose={() => setSelectedProduct(null)}
+              onAddToCart={handleAddToCart}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Toast Notification */}
+        <AnimatePresence>
+          {showToast && (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              className="fixed bottom-4 right-4 bg-emerald-400 text-black px-6 py-3 rounded-lg shadow-lg"
+              onAnimationComplete={() => {
+                setTimeout(() => setShowToast(false), 2000);
+              }}
+            >
+              {toastMessage}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Footer */}
+        <Footer />
       </div>
-
-      {/* Quick View Modal */}
-      <AnimatePresence>
-        {selectedProduct && (
-          <QuickViewModal
-            product={selectedProduct}
-            onClose={() => setSelectedProduct(null)}
-            onAddToCart={handleAddToCart}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Toast Notification */}
-      <AnimatePresence>
-        {showToast && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-4 right-4 bg-lime-500 text-black px-6 py-3 rounded-lg shadow-lg"
-            onAnimationComplete={() => {
-              setTimeout(() => setShowToast(false), 2000);
-            }}
-          >
-            {toastMessage}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 };

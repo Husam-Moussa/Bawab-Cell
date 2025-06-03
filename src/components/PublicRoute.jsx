@@ -11,7 +11,7 @@ const PublicRoute = ({ children }) => {
   }
 
   // If user is admin and trying to access login/signup, redirect to admin panel
-  if (user?.email === 'admin@mcnutrition.com' && (location.pathname === '/login' || location.pathname === '/signup')) {
+  if (user?.email === 'admin@bawabcell.com' && (location.pathname === '/login' || location.pathname === '/signup')) {
     return <Navigate to="/admin" />;
   }
 

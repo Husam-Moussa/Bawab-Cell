@@ -22,35 +22,57 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
+  const [toast, setToast] = useState({ message: '', visible: false });
+
+  const showToast = (message) => {
+    setToast({ message, visible: true });
+    setTimeout(() => setToast({ message: '', visible: false }), 2000);
+  };
+
   const addToCart = (product, quantity = 1) => {
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => item.id === product.id);
+      // Create a unique identifier that includes color and storage
+      const itemId = `${product.id}-${product.color || 'default'}-${product.storage || 'default'}`;
+      
+      const existingItem = prevItems.find(item => 
+        item.id === product.id && 
+        item.color === product.color && 
+        item.storage === product.storage
+      );
+
       if (existingItem) {
         return prevItems.map(item =>
-          item.id === product.id
+          item.id === product.id && 
+          item.color === product.color && 
+          item.storage === product.storage
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       }
       return [...prevItems, { ...product, quantity }];
     });
+    showToast(`Added: ${product.name}`);
   };
 
-  const updateCartQuantity = (productId, newQuantity) => {
+  const updateCartQuantity = (product, newQuantity) => {
     setCartItems(prevItems => {
       if (newQuantity === 0) {
-        return prevItems.filter(item => item.id !== productId);
+        return prevItems.filter(item =>
+          !(item.id === product.id && item.color === product.color && item.storage === product.storage)
+        );
       }
       return prevItems.map(item =>
-        item.id === productId
+        item.id === product.id && item.color === product.color && item.storage === product.storage
           ? { ...item, quantity: newQuantity }
           : item
       );
     });
   };
 
-  const removeFromCart = (productId) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+  const removeFromCart = (product) => {
+    setCartItems(prevItems => prevItems.filter(item =>
+      !(item.id === product.id && item.color === product.color && item.storage === product.storage)
+    ));
   };
 
   const clearCart = () => {
@@ -72,7 +94,9 @@ export const CartProvider = ({ children }) => {
     removeFromCart,
     clearCart,
     getCartTotal,
-    getCartItemsCount
+    getCartItemsCount,
+    toast,
+    showToast
   };
 
   return (

@@ -4,7 +4,7 @@ const createAdminUser = async () => {
   try {
     const response = await axios.post('http://localhost:5000/api/auth/register', {
       name: 'Admin',
-      email: 'admin@mcnutrition.com',
+      email: 'admin@bawabcell.com',
       password: 'admin123',
       role: 'admin'
     });

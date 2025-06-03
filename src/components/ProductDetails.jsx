@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 // Animated Rating Stars Component
@@ -163,246 +163,207 @@ const TabContent = ({ activeTab, product }) => (
   </AnimatePresence>
 );
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = () => {
+  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const [selectedFlavor, setSelectedFlavor] = useState(product?.flavors?.[0]);
-  const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0]);
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedStorage, setSelectedStorage] = useState('');
+  const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('details');
   const [isImageHovered, setIsImageHovered] = useState(false);
 
-  if (!product) {
-    return (
-      <div className="min-h-screen bg-black/95 p-4 flex items-center justify-center">
-        <p className="text-white">Product not found</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    setLoading(true);
+    setError('');
+    
+    // Get product from navigation state
+    if (location.state && location.state.product) {
+      setProduct(location.state.product);
+      setSelectedColor(location.state.product.colors?.[0] || '');
+      setSelectedStorage(location.state.product.storage?.[0] || '');
+      setLoading(false);
+    } else {
+      setError('Product not found');
+      setLoading(false);
+    }
+  }, [location.state]);
 
-  const handleAddToCart = () => {
-    addToCart({
-      ...product,
-      flavor: selectedFlavor,
-      size: selectedSize
+  const handleQuantityChange = (delta) => {
+    setQuantity((prev) => {
+      const newQty = prev + delta;
+      if (newQty < 1) return 1;
+      if (product && newQty > product.stock) return product.stock;
+      return newQty;
     });
-    // Show success message or toast
   };
 
+  const handleAddToCart = () => {
+    if (!product) return;
+    addToCart({
+      ...product,
+      color: selectedColor,
+      storage: selectedStorage,
+      quantity,
+      price: product.storagePrices?.[selectedStorage] || product.price
+    });
+  };
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
+  if (error) {
+    return <div className="min-h-screen flex items-center justify-center text-red-500">{error}</div>;
+  }
+  if (!product) {
+    return null;
+  }
+
   return (
-    <div className="min-h-screen bg-black/95">
-      {/* Back Button */}
-      <motion.button
-        onClick={() => navigate(-1)}
-        className="fixed top-4 left-4 z-50 bg-black/50 backdrop-blur p-2 rounded-full"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-      >
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </motion.button>
-
-      {/* Product Image */}
-      <motion.div 
-        className="relative w-full aspect-square overflow-hidden"
-        onHoverStart={() => setIsImageHovered(true)}
-        onHoverEnd={() => setIsImageHovered(false)}
-      >
-        <motion.img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-cover"
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ 
-            opacity: 1, 
-            scale: isImageHovered ? 1.1 : 1,
-            rotate: isImageHovered ? -1 : 0
-          }}
-          transition={{ duration: 0.4 }}
-        />
+    <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Product Image */}
         <motion.div
-          className="absolute top-4 right-4 bg-black/70 backdrop-blur px-3 py-1 rounded-full"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          className="relative aspect-square bg-gray-50 rounded-lg overflow-hidden"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
-          <motion.span 
-            className="text-lime-500 font-bold"
-            animate={{ 
-              scale: [1, 1.1, 1],
-              rotate: [0, -5, 5, 0]
-            }}
-            transition={{ 
-              duration: 0.5,
-              repeat: Infinity,
-              repeatDelay: 3
-            }}
-          >
-            ${product.price}
-          </motion.span>
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-contain p-6"
+          />
         </motion.div>
-      </motion.div>
 
-      {/* Product Info */}
-      <motion.div 
-        className="p-4 space-y-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-      >
-        <div>
-          <motion.h1 
-            className="text-2xl font-bold text-white mb-2"
+        {/* Product Info */}
+        <div className="space-y-6">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-          >
-            {product.name}
-          </motion.h1>
-          <motion.p 
-            className="text-gray-400"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            {product.description}
-          </motion.p>
-        </div>
+            <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
+            <p className="text-emerald-600 text-lg font-semibold mt-2">${product.price}</p>
+            <p className="text-gray-600 mt-4">{product.description}</p>
+          </motion.div>
 
-        {/* Rating and Stock */}
-        <div className="flex justify-between items-center">
-          <RatingStars rating={product.rating} reviews={product.reviews} />
-          <motion.span 
-            className={`font-medium ${
-              product.stock < 10 ? 'text-red-500' :
-              product.stock < 20 ? 'text-yellow-500' :
-              'text-green-500'
-            }`}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            {product.stock} in stock
-          </motion.span>
-        </div>
+          {/* Color Selection */}
+          {product.colors && product.colors.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <h3 className="text-sm font-medium text-gray-900">Color</h3>
+              <div className="mt-2 flex gap-2">
+                {product.colors.map((color) => (
+                  <button
+                    key={color}
+                    onClick={() => setSelectedColor(color)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium ${
+                      selectedColor === color
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                    }`}
+                  >
+                    {color}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
-        {/* Tabs */}
-        <div className="border-b border-gray-800">
-          <div className="flex gap-4">
-            {['details', 'nutrition', 'benefits'].map((tab) => (
-              <motion.button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 font-semibold transition-colors relative ${
-                  activeTab === tab
-                    ? 'text-lime-500'
-                    : 'text-gray-400'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                {activeTab === tab && (
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-lime-500"
-                    layoutId="activeTab"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
-              </motion.button>
-            ))}
-          </div>
-        </div>
+          {/* Storage Selection */}
+          {product.storage && product.storage.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <h3 className="text-sm font-medium text-gray-900">Storage</h3>
+              <div className="mt-2 flex gap-2">
+                {product.storage.map((storage) => (
+                  <button
+                    key={storage}
+                    onClick={() => setSelectedStorage(storage)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium ${
+                      selectedStorage === storage
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                    }`}
+                  >
+                    {storage}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
-        {/* Tab Content */}
-        <div className="min-h-[200px]">
-          <TabContent activeTab={activeTab} product={product} />
-        </div>
-
-        {/* Product Options */}
-        {product.flavors && (
+          {/* Quantity Selector */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
+            className="flex items-center gap-4"
           >
-            <h3 className="text-white font-semibold mb-2">Flavor</h3>
-            <div className="flex flex-wrap gap-2">
-              {product.flavors.map((flavor, index) => (
-                <motion.button
-                  key={flavor}
-                  onClick={() => setSelectedFlavor(flavor)}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold ${
-                    selectedFlavor === flavor
-                      ? 'bg-lime-500 text-black'
-                      : 'bg-black/50 text-gray-300 border border-lime-500/20'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 + (index * 0.1) }}
-                >
-                  {flavor}
-                </motion.button>
-              ))}
+            <h3 className="text-sm font-medium text-gray-900">Quantity</h3>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handleQuantityChange(-1)}
+                className="w-8 h-8 rounded-lg bg-gray-100 text-gray-900 hover:bg-gray-200"
+              >
+                -
+              </button>
+              <span className="w-8 text-center">{quantity}</span>
+              <button
+                onClick={() => handleQuantityChange(1)}
+                className="w-8 h-8 rounded-lg bg-gray-100 text-gray-900 hover:bg-gray-200"
+              >
+                +
+              </button>
             </div>
           </motion.div>
-        )}
 
-        {product.sizes && (
-          <motion.div
+          {/* Add to Cart Button */}
+          <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.6 }}
+            onClick={handleAddToCart}
+            className="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
           >
-            <h3 className="text-white font-semibold mb-2">Size</h3>
-            <div className="flex flex-wrap gap-2">
-              {product.sizes.map((size, index) => (
-                <motion.button
-                  key={size}
-                  onClick={() => setSelectedSize(size)}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold ${
-                    selectedSize === size
-                      ? 'bg-lime-500 text-black'
-                      : 'bg-black/50 text-gray-300 border border-lime-500/20'
+            Add to Cart
+          </motion.button>
+
+          {/* Tabs */}
+          <div className="border-b border-gray-200">
+            <div className="flex gap-4">
+              {['details', 'benefits'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-4 py-2 font-semibold transition-colors ${
+                    activeTab === tab
+                      ? 'text-emerald-600 border-b-2 border-emerald-600'
+                      : 'text-gray-400 hover:text-gray-900'
                   }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.8 + (index * 0.1) }}
                 >
-                  {size}
-                </motion.button>
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </button>
               ))}
             </div>
-          </motion.div>
-        )}
+          </div>
 
-        {/* Add to Cart Button */}
-        <motion.button
-          onClick={handleAddToCart}
-          className="relative w-full bg-lime-500 text-black py-4 rounded-lg font-semibold text-lg mt-6 overflow-hidden"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
-        >
-          <motion.div
-            className="absolute inset-0 bg-lime-400"
-            initial={{ x: "-100%" }}
-            whileHover={{ x: "100%" }}
-            transition={{ duration: 0.5 }}
-          />
-          <span className="relative z-10">
-            Add to Cart - ${product.price}
-            {selectedSize && <span className="text-sm ml-2">/ {selectedSize}</span>}
-          </span>
-        </motion.button>
-      </motion.div>
+          {/* Tab Content */}
+          <TabContent activeTab={activeTab} product={product} />
+        </div>
+      </div>
     </div>
   );
 };

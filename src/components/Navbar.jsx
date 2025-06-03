@@ -56,21 +56,9 @@ const Logo = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <span className="relative z-10 bg-gradient-to-r from-lime-500 via-lime-400 to-lime-500 bg-clip-text text-transparent">
-            MC NUTRITION
+          <span className="relative z-10 text-emerald-600 font-bold">
+            Bawab Cell
           </span>
-          <motion.div
-            className="absolute inset-0 bg-lime-500/20 rounded-lg blur-xl"
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
         </motion.div>
       </Link>
     </motion.div>
@@ -84,26 +72,14 @@ const NavLink = ({ to, children, isActive }) => {
   return (
     <Link to={to} className="relative group px-4 py-2">
       <motion.div
-        className="absolute inset-0 bg-lime-500/10 rounded-lg opacity-0"
-        whileHover={{ opacity: 1, scale: 1.1 }}
-        transition={{ duration: 0.2 }}
-      />
-      <motion.div
-        className="absolute -inset-1 bg-gradient-to-r from-lime-500/0 via-lime-500/20 to-lime-500/0 rounded-lg blur-lg"
-        animate={controls}
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileHover={{ 
-          opacity: 1, 
-          scale: 1,
-          transition: { duration: 0.3 }
-        }}
+        className="absolute inset-0 bg-emerald-50 rounded-lg opacity-0 group-hover:opacity-100 group-hover:scale-105 transition duration-200"
       />
       <motion.span
         onHoverStart={() => controls.start({ opacity: 1, scale: 1 })}
         onHoverEnd={() => controls.start({ opacity: 0, scale: 0.95 })}
         className={`relative z-10 text-lg font-medium ${
-          isActive ? 'text-lime-500' : 'text-gray-300'
-        }`}
+          isActive ? 'text-emerald-600' : 'text-gray-700'
+        } group-hover:text-emerald-500 transition-colors`}
         whileHover={{ y: -2 }}
         transition={{ type: "spring", stiffness: 400, damping: 20 }}
       >
@@ -111,7 +87,7 @@ const NavLink = ({ to, children, isActive }) => {
         {isActive && (
           <motion.div
             layoutId="activeTab"
-            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-lime-500"
+            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-emerald-600"
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
           />
         )}
@@ -136,10 +112,10 @@ const CartIcon = ({ count }) => {
       onClick={handleClick}
     >
       <div className="relative group p-2.5">
-        <div className="absolute inset-0 bg-black/40 rounded-lg border border-lime-500/20 group-hover:border-lime-500/40 transition-all duration-300" />
+        <div className="absolute inset-0 bg-emerald-700 rounded-lg border border-emerald-700/20 group-hover:border-emerald-700/40 transition-all duration-300" />
         <div className="relative w-6 h-6 flex items-center justify-center">
           <motion.svg
-            className="w-5 h-5 text-lime-500"
+            className="w-5 h-5 text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -150,7 +126,7 @@ const CartIcon = ({ count }) => {
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              className="absolute -top-2 -right-2 min-w-[18px] h-4.5 px-1 bg-lime-500 text-black rounded-full flex items-center justify-center text-xs font-medium"
+              className="absolute -top-2 -right-2 min-w-[18px] h-4.5 px-1 bg-emerald-700 text-white rounded-full flex items-center justify-center text-xs font-medium"
             >
               {count}
             </motion.div>
@@ -337,13 +313,10 @@ const Navbar = () => {
           stiffness: 300,
           damping: 30
         }}
-        className={`fixed w-full z-50 transition-all duration-500 ${
-          isScrolled 
-            ? 'bg-black/90 backdrop-blur-lg border-b border-lime-500/10 py-4' 
-            : 'bg-transparent py-6'
+        className={`fixed w-full z-50 border-none transition-all duration-500 ${
+          isScrolled ? 'bg-white py-4' : 'bg-white py-6'
         }`}
       >
-        <NeonLineEffect />
         <ParticleEffect />
         <motion.div 
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative"
@@ -428,10 +401,10 @@ const Navbar = () => {
                     className="relative group"
                   >
                     <div className="relative group p-2.5">
-                      <div className="absolute inset-0 bg-black/40 rounded-lg border border-lime-500/20 group-hover:border-lime-500/40 transition-all duration-300" />
+                      <div className="absolute inset-0 bg-emerald-600 rounded-lg border border-emerald-600/20 group-hover:border-emerald-600/40 transition-all duration-300" />
                       <div className="relative w-6 h-6 flex items-center justify-center">
                         <motion.svg
-                          className="w-5 h-5 text-lime-500"
+                          className="w-5 h-5 text-white"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -444,8 +417,8 @@ const Navbar = () => {
                 </Link>
               ) : (
                 <>
-                  {user.email === 'admin@mcnutrition.com' && (
-                    <Link to="/admin" className="px-3 py-1.5 bg-black/40 border border-lime-500/20 hover:border-lime-500/40 text-lime-500 rounded-lg font-medium transition-all duration-300 hidden md:inline-block">Admin</Link>
+                  {user.email === 'admin@bawabcell.com' && (
+                    <Link to="/admin" className="px-3 py-1.5 bg-emerald-700 border border-emerald-700/20 hover:border-emerald-700/40 text-white rounded-lg font-medium transition-all duration-300 hidden md:inline-block">Admin</Link>
                   )}
                   <Link to="/user" className="relative group hidden md:block">
                     <motion.div
@@ -453,9 +426,9 @@ const Navbar = () => {
                       className="relative group"
                     >
                       <div className="relative group p-2.5">
-                        <div className="absolute inset-0 bg-black/40 rounded-lg border border-lime-500/20 group-hover:border-lime-500/40 transition-all duration-300" />
+                        <div className="absolute inset-0 bg-emerald-700 rounded-lg border border-emerald-700/20 group-hover:border-emerald-700/40 transition-all duration-300" />
                         <div className="relative w-6 h-6 flex items-center justify-center">
-                          <span className="text-sm font-medium text-lime-500">
+                          <span className="text-sm font-medium text-white">
                             {user.displayName?.[0] || user.email?.[0] || 'U'}
                           </span>
                         </div>
@@ -477,10 +450,10 @@ const Navbar = () => {
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   className="relative group p-3"
                 >
-                  <div className="absolute inset-0 bg-lime-500/20 rounded-lg blur group-hover:bg-lime-500/30" />
+                  <div className="absolute inset-0 bg-emerald-600/20 rounded-lg blur group-hover:bg-emerald-600/30" />
                   <div className="relative">
                     <motion.div
-                      className="w-7 h-0.5 bg-lime-500 mb-1.5"
+                      className="w-7 h-0.5 bg-emerald-600 mb-1.5"
                       animate={{
                         rotate: isMobileMenuOpen ? 45 : 0,
                         y: isMobileMenuOpen ? 8 : 0,
@@ -488,7 +461,7 @@ const Navbar = () => {
                       transition={{ duration: 0.2 }}
                     />
                     <motion.div
-                      className="w-7 h-0.5 bg-lime-500 mb-1.5"
+                      className="w-7 h-0.5 bg-emerald-600 mb-1.5"
                       animate={{
                         opacity: isMobileMenuOpen ? 0 : 1,
                         x: isMobileMenuOpen ? 20 : 0,
@@ -496,7 +469,7 @@ const Navbar = () => {
                       transition={{ duration: 0.2 }}
                     />
                     <motion.div
-                      className="w-7 h-0.5 bg-lime-500"
+                      className="w-7 h-0.5 bg-emerald-600"
                       animate={{
                         rotate: isMobileMenuOpen ? -45 : 0,
                         y: isMobileMenuOpen ? -8 : 0,
@@ -521,7 +494,7 @@ const Navbar = () => {
               className="md:hidden relative"
             >
               <motion.div
-                className="absolute inset-0 bg-gradient-to-b from-black/90 to-black backdrop-blur-lg"
+                className="absolute inset-0 bg-gradient-to-b from-white to-gray-50 backdrop-blur-lg"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -534,18 +507,18 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ delay: 0.1 }}
-                    className="flex items-center gap-4 p-4 mb-6 bg-lime-500/5 rounded-xl border border-lime-500/10"
+                    className="flex items-center gap-4 p-4 mb-6 bg-emerald-600/5 rounded-xl border border-emerald-600/10"
                   >
-                    <div className="w-16 h-16 bg-lime-500/20 rounded-full flex items-center justify-center">
-                      <span className="text-2xl font-bold text-lime-500">
+                    <div className="w-16 h-16 bg-emerald-600/20 rounded-full flex items-center justify-center">
+                      <span className="text-2xl font-bold text-emerald-600">
                         {user.displayName?.[0] || user.email?.[0] || 'U'}
                       </span>
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white">
+                      <h3 className="text-xl font-bold text-gray-900">
                         {user.displayName || 'User'}
                       </h3>
-                      <p className="text-gray-400 text-sm truncate">{user.email}</p>
+                      <p className="text-gray-600 text-sm truncate">{user.email}</p>
                     </div>
                   </motion.div>
                 )}
@@ -562,8 +535,8 @@ const Navbar = () => {
                       to="/"
                       className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all ${
                         isActive('/') 
-                          ? 'bg-lime-500/20 text-lime-500' 
-                          : 'text-gray-300 hover:bg-lime-500/10 hover:text-lime-500'
+                          ? 'bg-emerald-600/20 text-emerald-600' 
+                          : 'text-gray-700 hover:bg-emerald-600/10 hover:text-emerald-600'
                       }`}
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -583,8 +556,8 @@ const Navbar = () => {
                       to="/shop"
                       className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all ${
                         isActive('/shop') 
-                          ? 'bg-lime-500/20 text-lime-500' 
-                          : 'text-gray-300 hover:bg-lime-500/10 hover:text-lime-500'
+                          ? 'bg-emerald-600/20 text-emerald-600' 
+                          : 'text-gray-700 hover:bg-emerald-600/10 hover:text-emerald-600'
                       }`}
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -604,8 +577,8 @@ const Navbar = () => {
                       to="/about"
                       className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all ${
                         isActive('/about') 
-                          ? 'bg-lime-500/20 text-lime-500' 
-                          : 'text-gray-300 hover:bg-lime-500/10 hover:text-lime-500'
+                          ? 'bg-emerald-600/20 text-emerald-600' 
+                          : 'text-gray-700 hover:bg-emerald-600/10 hover:text-emerald-600'
                       }`}
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -625,8 +598,8 @@ const Navbar = () => {
                       to="/contact"
                       className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all ${
                         isActive('/contact') 
-                          ? 'bg-lime-500/20 text-lime-500' 
-                          : 'text-gray-300 hover:bg-lime-500/10 hover:text-lime-500'
+                          ? 'bg-emerald-600/20 text-emerald-600' 
+                          : 'text-gray-700 hover:bg-emerald-600/10 hover:text-emerald-600'
                       }`}
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -638,7 +611,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Account Section */}
-                <div className="space-y-2 pt-4 mt-4 border-t border-lime-500/10">
+                <div className="space-y-2 pt-4 mt-4 border-t border-emerald-600/10">
                   {!user ? (
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
@@ -648,7 +621,7 @@ const Navbar = () => {
                     >
                       <Link
                         to="/login"
-                        className="flex items-center gap-3 w-full p-3 rounded-lg text-gray-300 hover:bg-lime-500/10 hover:text-lime-500 transition-all"
+                        className="flex items-center gap-3 w-full p-3 rounded-lg text-gray-700 hover:bg-emerald-600/10 hover:text-emerald-600 transition-all"
                       >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -658,7 +631,7 @@ const Navbar = () => {
                     </motion.div>
                   ) : (
                     <>
-                      {user.email === 'admin@mcnutrition.com' && (
+                      {user.email === 'admin@bawabcell.com' && (
                         <motion.div
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -667,10 +640,15 @@ const Navbar = () => {
                         >
                           <Link
                             to="/admin"
-                            className="flex items-center gap-3 w-full p-3 rounded-lg text-gray-300 hover:bg-lime-500/10 hover:text-lime-500 transition-all"
+                            className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all ${
+                              isActive('/admin') 
+                                ? 'bg-emerald-600/20 text-emerald-600' 
+                                : 'text-gray-700 hover:bg-emerald-600/10 hover:text-emerald-600'
+                            }`}
                           >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                             <span className="text-lg font-medium">Admin Panel</span>
                           </Link>
@@ -685,12 +663,16 @@ const Navbar = () => {
                       >
                         <Link
                           to="/user"
-                          className="flex items-center gap-3 w-full p-3 rounded-lg text-gray-300 hover:bg-lime-500/10 hover:text-lime-500 transition-all"
+                          className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all ${
+                            isActive('/user') 
+                              ? 'bg-emerald-600/20 text-emerald-600' 
+                              : 'text-gray-700 hover:bg-emerald-600/10 hover:text-emerald-600'
+                          }`}
                         >
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                           </svg>
-                          <span className="text-lg font-medium">My Account</span>
+                          <span className="text-lg font-medium">Profile</span>
                         </Link>
                       </motion.div>
 
@@ -702,7 +684,7 @@ const Navbar = () => {
                       >
                         <button
                           onClick={handleLogout}
-                          className="flex items-center gap-3 w-full p-3 rounded-lg text-gray-300 hover:bg-red-500/10 hover:text-red-500 transition-all"
+                          className="flex items-center gap-3 w-full p-3 rounded-lg text-gray-700 hover:bg-emerald-600/10 hover:text-emerald-600 transition-all"
                         >
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

@@ -11,7 +11,7 @@ const About = () => {
         </svg>
       ),
       title: "Quality Products",
-      description: "We source only the highest quality supplements from trusted manufacturers worldwide."
+      description: "We source only the highest quality tech products from trusted manufacturers worldwide."
     },
     {
       icon: (
@@ -20,7 +20,7 @@ const About = () => {
         </svg>
       ),
       title: "Best Prices",
-      description: "Competitive pricing without compromising on quality, making supplements accessible to everyone."
+      description: "Competitive pricing without compromising on quality, making technology accessible to everyone."
     },
     {
       icon: (
@@ -29,30 +29,30 @@ const About = () => {
         </svg>
       ),
       title: "Fast Delivery",
-      description: "Quick and reliable delivery service across Lebanon, ensuring you get your supplements when you need them."
+      description: "Quick and reliable delivery service across Lebanon, ensuring you get your products when you need them."
     }
   ];
 
   const stats = [
-    { number: "5+", text: "Years Experience" },
-    { number: "1000+", text: "Happy Customers" },
-    { number: "100+", text: "Products" },
-    { number: "24/7", text: "Support" }
+    { number: "26", text: "Years Experience" },
+    { number: "1999", text: "Established" },
+    { number: "Tyre, Lebanon", text: "Location" },
+    { number: "1000+", text: "Happy Customers" }
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white text-gray-900">
       {/* Background Effects */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white">
           <motion.div
             className="absolute inset-0 opacity-30"
             animate={{
               background: [
-                'radial-gradient(circle at 0% 0%, #84cc1622 0%, transparent 50%)',
-                'radial-gradient(circle at 100% 100%, #84cc1622 0%, transparent 50%)',
-                'radial-gradient(circle at 0% 100%, #84cc1622 0%, transparent 50%)',
-                'radial-gradient(circle at 100% 0%, #84cc1622 0%, transparent 50%)',
+                'radial-gradient(circle at 0% 0%, #00ff8822 0%, transparent 50%)',
+                'radial-gradient(circle at 100% 100%, #00ff8822 0%, transparent 50%)',
+                'radial-gradient(circle at 0% 100%, #00ff8822 0%, transparent 50%)',
+                'radial-gradient(circle at 100% 0%, #00ff8822 0%, transparent 50%)',
               ]
             }}
             transition={{
@@ -74,8 +74,8 @@ const About = () => {
             transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <h1 className="text-4xl font-bold text-white mb-4">About MC Nutrition</h1>
-            <p className="text-lime-500 text-lg">Your Trusted Source for Premium Supplements</p>
+            <h1 className="text-4xl font-bold text-emerald-600 mb-4">About <span className="text-emerald-500">Bawab Cell</span></h1>
+            <p className="text-emerald-500 text-lg">Your Trusted Source for Technology in Tyre, Lebanon</p>
           </motion.div>
 
           {/* Main Content */}
@@ -86,11 +86,11 @@ const About = () => {
               transition={{ delay: 0.2 }}
               className="space-y-6"
             >
-              <h2 className="text-3xl font-bold text-white">Your Health Journey Starts Here</h2>
-              <p className="text-gray-300">
-                At MC Nutrition, we believe in providing more than just supplements – we offer a pathway to your optimal health and fitness goals. Established with a vision to make premium quality supplements accessible to everyone in Lebanon, we've grown to become one of the most trusted names in the industry.
+              <h2 className="text-3xl font-bold text-emerald-600">Your Technology Experience Starts Here</h2>
+              <p className="text-gray-700">
+                At Bawab Cell, we believe in providing more than just Apple devices – we offer a wide range of technology products to enhance your digital lifestyle. Located in Tyre, Lebanon and established in 1999, we've grown to become one of the most trusted names in the industry.
               </p>
-              <p className="text-gray-300">
+              <p className="text-gray-700">
                 Our commitment to quality, authenticity, and customer satisfaction sets us apart. We carefully select each product in our inventory, ensuring it meets the highest standards of quality and effectiveness.
               </p>
             </motion.div>
@@ -105,10 +105,10 @@ const About = () => {
                 <motion.div
                   key={index}
                   whileHover={{ scale: 1.05 }}
-                  className="bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl p-6 text-center"
+                  className="bg-white border border-emerald-100 rounded-xl p-6 text-center shadow-sm"
                 >
-                  <h3 className="text-3xl font-bold text-lime-500">{stat.number}</h3>
-                  <p className="text-gray-300">{stat.text}</p>
+                  <h3 className="text-2xl font-bold text-emerald-600">{stat.number}</h3>
+                  <p className="text-gray-600">{stat.text}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -125,13 +125,13 @@ const About = () => {
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.05 }}
-                className="bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl p-6"
+                className="bg-emerald-50 border border-emerald-100 rounded-xl p-6"
               >
-                <div className="w-12 h-12 bg-lime-500/20 rounded-full flex items-center justify-center text-lime-500 mb-4">
+                <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 mb-4">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-                <p className="text-gray-300">{feature.description}</p>
+                <h3 className="text-xl font-semibold text-emerald-700 mb-2">{feature.title}</h3>
+                <p className="text-gray-700">{feature.description}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -143,22 +143,21 @@ const About = () => {
             transition={{ delay: 0.5 }}
             className="mt-20 text-center"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">Our Expert Team</h2>
-            <p className="text-lime-500 mb-12">Dedicated professionals committed to your success</p>
-            
+            <h2 className="text-3xl font-bold text-emerald-600 mb-4">Our Expert Team</h2>
+            <p className="text-emerald-500 mb-12">Dedicated professionals committed to your technology experience</p>
             <div className="flex justify-center">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl p-6 max-w-sm"
+                className="bg-emerald-50 border border-emerald-100 rounded-xl p-6 max-w-sm"
               >
                 <img 
-                  src="/Images/Client2.png" 
-                  alt="Mohammad Chehab" 
+                  src="/unnamed.jpg" 
+                  alt="Rabih Bawab" 
                   className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
                 />
-                <h3 className="text-xl font-semibold text-white">Mohammad Chehab</h3>
-                <p className="text-lime-500">Nutrition Expert</p>
-                <p className="text-gray-300 mt-2">Certified nutritionist with extensive experience in sports nutrition and supplement protocols.</p>
+                <h3 className="text-xl font-semibold text-emerald-700">Rabih Bawab</h3>
+                <p className="text-emerald-600">Tech Expert</p>
+                <p className="text-gray-700 mt-2">Certified specialist with extensive experience in technology products and customer support.</p>
               </motion.div>
             </div>
           </motion.div>

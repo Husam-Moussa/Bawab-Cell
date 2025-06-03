@@ -120,7 +120,7 @@ const ProductCard = ({ product }) => {
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* Front of card */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-black/95 to-black/90 rounded-2xl border border-lime-500/20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-white/95 to-white/90 rounded-2xl border border-emerald-500/20 overflow-hidden">
           {/* Background Animation */}
           <motion.div
             className="absolute inset-0 opacity-20"
@@ -142,7 +142,7 @@ const ProductCard = ({ product }) => {
           
           <div className="relative h-72 overflow-hidden rounded-t-2xl">
             <motion.div
-              className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"
+              className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10"
               animate={{
                 opacity: isHovered ? 1 : 0.7
               }}
@@ -158,16 +158,16 @@ const ProductCard = ({ product }) => {
             />
             {/* Floating Product Details */}
             <motion.div
-              className="absolute top-4 right-4 bg-black/80 backdrop-blur border border-lime-500/20 rounded-lg px-3 py-1 z-20"
+              className="absolute top-4 right-4 bg-white/80 backdrop-blur border border-emerald-500/20 rounded-lg px-3 py-1 z-20"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <span className="text-lime-500 font-bold">${product.price}</span>
+              <span className="text-emerald-500 font-bold">${product.price}</span>
             </motion.div>
             {/* Product Badge */}
             {product.badge && (
               <motion.div
-                className="absolute top-4 left-4 bg-lime-500 text-black rounded-lg px-3 py-1 z-20 font-semibold text-sm"
+                className="absolute top-4 left-4 bg-emerald-500 text-black rounded-lg px-3 py-1 z-20 font-semibold text-sm"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
               >
@@ -179,15 +179,15 @@ const ProductCard = ({ product }) => {
           <div className="p-6 relative">
             {/* Product Category */}
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-lime-500 text-sm font-medium">{product.category}</span>
-              <span className="w-1 h-1 bg-lime-500/50 rounded-full"/>
+              <span className="text-emerald-500 text-sm font-medium">{product.category}</span>
+              <span className="w-1 h-1 bg-emerald-500/50 rounded-full"/>
               <span className="text-gray-400 text-sm">{product.size}</span>
             </div>
             
             <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-3">
               {product.name}
               {product.isNew && (
-                <span className="text-xs bg-lime-500/20 text-lime-500 px-2 py-1 rounded-full">NEW</span>
+                <span className="text-xs bg-emerald-500/20 text-emerald-500 px-2 py-1 rounded-full">NEW</span>
               )}
             </h3>
             
@@ -197,7 +197,7 @@ const ProductCard = ({ product }) => {
             <div className="grid grid-cols-2 gap-3 mb-6">
               {product.keyFeatures?.map((feature, idx) => (
                 <div key={idx} className="flex items-center gap-2 text-sm text-gray-300">
-                  <div className="w-2 h-2 rounded-full bg-lime-500/50" />
+                  <div className="w-2 h-2 rounded-full bg-emerald-500/50" />
                   {feature}
                 </div>
               ))}
@@ -210,7 +210,7 @@ const ProductCard = ({ product }) => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => addToCart(product)}
-                  className="text-black bg-lime-500 hover:bg-lime-600 px-6 py-3 rounded-lg font-semibold flex items-center gap-2"
+                  className="text-black bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold flex items-center gap-2"
                 >
                   Add to Cart
                   <span className="text-xl">🛒</span>
@@ -219,7 +219,7 @@ const ProductCard = ({ product }) => {
                   onClick={() => setIsFlipped(true)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="hidden lg:block text-lime-500 hover:text-lime-400 px-4 py-3 rounded-lg font-semibold border border-lime-500/20 hover:border-lime-500/40"
+                  className="hidden lg:block text-emerald-500 hover:text-emerald-400 px-4 py-3 rounded-lg font-semibold border border-emerald-500/20 hover:border-emerald-500/40"
                 >
                   Details
                 </motion.button>
@@ -230,7 +230,7 @@ const ProductCard = ({ product }) => {
 
         {/* Back of card */}
         <div 
-          className="absolute inset-0 bg-gradient-to-br from-black via-black/95 to-black/90 rounded-2xl border border-lime-500/20 [transform:rotateY(180deg)] [backface-visibility:hidden] cursor-pointer group/back"
+          className="absolute inset-0 bg-gradient-to-br from-white via-white/95 to-white/90 rounded-2xl border border-emerald-500/20 [transform:rotateY(180deg)] [backface-visibility:hidden] cursor-pointer group/back"
           onClick={() => setIsFlipped(false)}
         >
           <div className="p-8 h-full flex flex-col relative">
@@ -258,7 +258,7 @@ const ProductCard = ({ product }) => {
             </motion.div>
 
             <div className="flex items-center justify-between mb-6">
-              <h4 className="text-2xl font-bold text-lime-500">Nutrition Facts</h4>
+              <h4 className="text-2xl font-bold text-emerald-500">Nutrition Facts</h4>
             </div>
 
             {/* Nutrition Grid */}
@@ -266,7 +266,7 @@ const ProductCard = ({ product }) => {
               {Object.entries(product.nutrition || {}).map(([key, value]) => (
                 <div 
                   key={key} 
-                  className="bg-black/30 border border-lime-500/10 rounded-lg p-4 hover:border-lime-500/30 transition-colors"
+                  className="bg-white/30 border border-emerald-500/10 rounded-lg p-4 hover:border-emerald-500/30 transition-colors"
                 >
                   <h5 className="text-gray-400 text-sm mb-1 capitalize">{key}</h5>
                   <p className="text-white text-xl font-bold">{value}</p>
@@ -276,14 +276,14 @@ const ProductCard = ({ product }) => {
 
             {/* Benefits Section */}
             <div className="mb-8">
-              <h4 className="text-xl font-bold text-lime-500 mb-4">Key Benefits</h4>
+              <h4 className="text-xl font-bold text-emerald-500 mb-4">Key Benefits</h4>
               <ul className="space-y-3">
                 {product.benefits?.map((benefit, idx) => (
                   <li 
                     key={idx} 
                     className="flex items-start gap-3 text-gray-300 hover:text-white transition-colors"
                   >
-                    <span className="text-lime-500 text-xl">•</span>
+                    <span className="text-emerald-500 text-xl">•</span>
                     {benefit}
                   </li>
                 ))}
@@ -292,13 +292,13 @@ const ProductCard = ({ product }) => {
 
             {/* Usage Instructions */}
             <div className="mt-auto">
-              <h4 className="text-xl font-bold text-lime-500 mb-4">Recommended Usage</h4>
+              <h4 className="text-xl font-bold text-emerald-500 mb-4">Recommended Usage</h4>
               <p className="text-gray-300">{product.usage}</p>
             </div>
 
             {/* Visual feedback for clickable area */}
             <motion.div
-              className="absolute inset-0 bg-lime-500/5 opacity-0 group-hover/back:opacity-100 transition-opacity"
+              className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity"
               whileHover={{ scale: 0.98 }}
             />
           </div>
@@ -545,19 +545,19 @@ const QuickView = ({ product, onClose, isFavorite, onToggleFavorite }) => {
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
-        className="bg-black border border-lime-500/20 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white border border-emerald-500/20 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
         onClick={e => e.stopPropagation()}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
           {/* Product Image */}
-          <div className="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-lime-500/20 via-lime-500/10 to-transparent">
+          <div className="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-emerald-500/20 via-emerald-500/10 to-transparent">
             <img
               src={product.image}
               alt={product.name}
               className="w-full h-full object-cover"
             />
             {product.badge && (
-              <div className="absolute top-4 left-4 bg-lime-500 text-black px-3 py-1 rounded-full text-sm font-bold">
+              <div className="absolute top-4 left-4 bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-bold">
                 {product.badge}
               </div>
             )}
@@ -582,7 +582,7 @@ const QuickView = ({ product, onClose, isFavorite, onToggleFavorite }) => {
             </div>
 
             <div className="flex items-center gap-4">
-              <span className="text-3xl font-bold text-lime-500">${product.price}</span>
+              <span className="text-3xl font-bold text-emerald-500">${product.price}</span>
               {product.oldPrice && (
                 <span className="text-xl text-gray-500 line-through">${product.oldPrice}</span>
               )}
@@ -595,7 +595,7 @@ const QuickView = ({ product, onClose, isFavorite, onToggleFavorite }) => {
               <div className="grid grid-cols-2 gap-3">
                 {product.keyFeatures?.map((feature, idx) => (
                   <div key={idx} className="flex items-center gap-2 text-gray-300">
-                    <div className="w-2 h-2 rounded-full bg-lime-500/50" />
+                    <div className="w-2 h-2 rounded-full bg-emerald-500/50" />
                     {feature}
                   </div>
                 ))}
@@ -607,7 +607,7 @@ const QuickView = ({ product, onClose, isFavorite, onToggleFavorite }) => {
                 <h3 className="text-xl font-bold text-white">Nutrition Facts</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {Object.entries(product.nutrition).map(([key, value]) => (
-                    <div key={key} className="bg-black/30 border border-lime-500/10 rounded-lg p-4">
+                    <div key={key} className="bg-white/30 border border-emerald-500/10 rounded-lg p-4">
                       <h5 className="text-gray-400 text-sm capitalize">{key}</h5>
                       <p className="text-white text-lg font-bold">{value}</p>
                     </div>
@@ -623,11 +623,12 @@ const QuickView = ({ product, onClose, isFavorite, onToggleFavorite }) => {
                 addToCart({ ...product, flavor: selectedFlavor, size: selectedSize });
                 onClose();
               }}
-              className="w-full bg-lime-500 text-black py-4 rounded-xl font-bold text-lg hover:bg-lime-400 transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-emerald-500 text-white py-4 rounded-xl font-bold text-lg hover:bg-emerald-400 transition-colors flex items-center justify-center gap-2"
             >
               Add to Cart
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                <path stroke
+                Linecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
             </motion.button>
           </div>
@@ -648,6 +649,238 @@ const QuickView = ({ product, onClose, isFavorite, onToggleFavorite }) => {
     </motion.div>
   );
 };
+
+// Enhanced DeviceFinder: multi-step, more options, animated loader, card UI
+const deviceOptions = [
+  { brand: "Apple", label: "iPhone 15 Pro Max", use: "Photography", price: "High", image: "/Images/iphone15promax.jpg", desc: "Unmatched camera system with ProRAW, ProRes, and advanced night mode." },
+  { brand: "Samsung", label: "Galaxy S24 Ultra", use: "Productivity", price: "High", image: "/Images/galaxys24ultra.jpg", desc: "S Pen, 200MP camera, and stunning AMOLED display." },
+  { brand: "Xiaomi", label: "Redmi Note 13", use: "Everyday", price: "Budget", image: "/Images/redminote13.jpg", desc: "Great performance and features at an affordable price." },
+  { brand: "Google", label: "Pixel 8 Pro", use: "Photography", price: "Mid", image: "/Images/pixel8pro.jpg", desc: "Best-in-class AI camera and clean Android experience." },
+  { brand: "OnePlus", label: "OnePlus 12", use: "Gaming", price: "Mid", image: "/Images/oneplus12.jpg", desc: "Flagship performance and fast charging for gamers." },
+  { brand: "Oppo", label: "Oppo Reno 11", use: "Everyday", price: "Budget", image: "/Images/opporeno11.jpg", desc: "Sleek design and reliable performance for daily use." },
+  { brand: "Apple", label: "iPhone SE (2022)", use: "Everyday", price: "Budget", image: "/Images/iphonese2022.jpg", desc: "Compact, powerful, and affordable Apple device." },
+  { brand: "Samsung", label: "Galaxy A54", use: "Everyday", price: "Mid", image: "/Images/galaxya54.jpg", desc: "Balanced features and value from Samsung." },
+];
+
+function DeviceFinder() {
+  const [step, setStep] = React.useState(0);
+  const [answers, setAnswers] = React.useState({ use: null, price: null, brand: null });
+  const [loading, setLoading] = React.useState(false);
+  const [result, setResult] = React.useState(null);
+
+  const uses = [
+    { label: "Photography" },
+    { label: "Gaming" },
+    { label: "Productivity" },
+    { label: "Everyday" },
+  ];
+  const prices = [
+    { label: "Budget" },
+    { label: "Mid" },
+    { label: "High" },
+  ];
+  const brands = [
+    { label: "Apple" },
+    { label: "Samsung" },
+    { label: "Xiaomi" },
+    { label: "Google" },
+    { label: "OnePlus" },
+    { label: "Oppo" },
+  ];
+
+  function handleSelect(field, value) {
+    setAnswers(prev => ({ ...prev, [field]: value }));
+    setStep(step + 1);
+  }
+
+  React.useEffect(() => {
+    if (step === 3 && answers.use && answers.price && answers.brand) {
+      setLoading(true);
+      setTimeout(() => {
+        // Find best match
+        const match = deviceOptions.find(
+          d => d.use === answers.use && d.price === answers.price && d.brand === answers.brand
+        ) || deviceOptions.find(d => d.use === answers.use && d.price === answers.price) || deviceOptions[0];
+        setResult(match);
+        setLoading(false);
+        setStep(4);
+      }, 1800);
+    }
+  }, [step, answers]);
+
+  function reset() {
+    setStep(0);
+    setAnswers({ use: null, price: null, brand: null });
+    setResult(null);
+    setLoading(false);
+  }
+
+  return (
+    <motion.div className="bg-white border border-emerald-100 rounded-xl p-4 sm:p-8 shadow-lg mb-12">
+      <h2 className="text-2xl font-bold text-emerald-700 mb-6 text-center">Device Finder</h2>
+      <AnimatePresence mode="wait">
+        {step === 0 && (
+          <motion.div key="q1" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} transition={{ duration: 0.5 }}>
+            <p className="text-lg text-gray-700 text-center mb-6">What will you use your device for?</p>
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+              {uses.map(opt => (
+                <button key={opt.label} onClick={() => handleSelect('use', opt.label)} className="w-full p-4 sm:p-6 rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700 font-semibold shadow-sm hover:bg-emerald-100 transition-all text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+        {step === 1 && (
+          <motion.div key="q2" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} transition={{ duration: 0.5 }}>
+            <p className="text-lg text-gray-700 text-center mb-6">What's your budget?</p>
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+              {prices.map(opt => (
+                <button key={opt.label} onClick={() => handleSelect('price', opt.label)} className="w-full p-4 sm:p-6 rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700 font-semibold shadow-sm hover:bg-emerald-100 transition-all text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+        {step === 2 && (
+          <motion.div key="q3" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} transition={{ duration: 0.5 }}>
+            <p className="text-lg text-gray-700 text-center mb-6">Preferred brand?</p>
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+              {brands.map(opt => (
+                <button key={opt.label} onClick={() => handleSelect('brand', opt.label)} className="w-full p-4 sm:p-6 rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700 font-semibold shadow-sm hover:bg-emerald-100 transition-all text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+        {loading && (
+          <motion.div key="loader" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center justify-center min-h-[200px] py-8">
+            <motion.div className="w-16 h-16 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin mb-4" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }} />
+            <p className="text-emerald-700 font-semibold">Finding your perfect device...</p>
+          </motion.div>
+        )}
+        {step === 4 && result && (
+          <motion.div key="result" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} transition={{ duration: 0.5 }} className="flex flex-col items-center gap-4 py-4">
+            <img src={result.image} alt={result.label} className="w-32 h-32 sm:w-40 sm:h-40 object-contain rounded-xl border border-emerald-100" />
+            <h3 className="text-xl sm:text-2xl font-bold text-emerald-700 text-center">{result.label}</h3>
+            <p className="text-gray-700 text-center max-w-xs sm:max-w-md">{result.desc}</p>
+            <button onClick={reset} className="mt-4 px-4 sm:px-6 py-2 rounded-full bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition-colors w-full max-w-xs">Try Again</button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+// Enhanced AccessoryMatch: multi-step, more options, animated loader, card UI
+const accessoryOptions = [
+  { device: "iPhone 15 Pro Max", need: "Charging", brand: "Apple", accessory: { name: "MagSafe Charger", image: "/Images/magsafe.jpg", desc: "Fast wireless charging for iPhone." } },
+  { device: "Galaxy S24 Ultra", need: "Stylus", brand: "Samsung", accessory: { name: "S Pen Pro", image: "/Images/spenpro.jpg", desc: "Precision stylus for Galaxy S24 Ultra." } },
+  { device: "Redmi Note 13", need: "Fitness", brand: "Xiaomi", accessory: { name: "Mi Band 8", image: "/Images/miband8.jpg", desc: "Track your fitness and notifications." } },
+  { device: "Pixel 8 Pro", need: "Audio", brand: "Google", accessory: { name: "Pixel Buds Pro", image: "/Images/pixelbudspro.jpg", desc: "Premium wireless earbuds for Pixel." } },
+  { device: "OnePlus 12", need: "Charging", brand: "OnePlus", accessory: { name: "Warp Charger 80W", image: "/Images/warpcharger.jpg", desc: "Super-fast charging for OnePlus devices." } },
+  { device: "Oppo Reno 11", need: "Protection", brand: "Oppo", accessory: { name: "Oppo Smart Case", image: "/Images/oppocase.jpg", desc: "Stylish and protective case for Oppo Reno." } },
+  { device: "iPhone SE (2022)", need: "Audio", brand: "Apple", accessory: { name: "AirPods 3rd Gen", image: "/Images/airpods3.jpg", desc: "Wireless audio for iPhone SE." } },
+  { device: "Galaxy A54", need: "Protection", brand: "Samsung", accessory: { name: "Samsung Clear Case", image: "/Images/samsungcase.jpg", desc: "Crystal clear protection for Galaxy A54." } },
+];
+
+function AccessoryMatch() {
+  const [step, setStep] = React.useState(0);
+  const [answers, setAnswers] = React.useState({ device: null, need: null, brand: null });
+  const [loading, setLoading] = React.useState(false);
+  const [result, setResult] = React.useState(null);
+
+  const devices = [
+    "iPhone 15 Pro Max", "Galaxy S24 Ultra", "Redmi Note 13", "Pixel 8 Pro", "OnePlus 12", "Oppo Reno 11", "iPhone SE (2022)", "Galaxy A54"
+  ];
+  const needs = [
+    "Charging", "Audio", "Protection", "Fitness", "Stylus"
+  ];
+  const brands = [
+    "Apple", "Samsung", "Xiaomi", "Google", "OnePlus", "Oppo"
+  ];
+
+  function handleSelect(field, value) {
+    setAnswers(prev => ({ ...prev, [field]: value }));
+    setStep(step + 1);
+  }
+
+  React.useEffect(() => {
+    if (step === 3 && answers.device && answers.need && answers.brand) {
+      setLoading(true);
+      setTimeout(() => {
+        // Find best match
+        const match = accessoryOptions.find(
+          a => a.device === answers.device && a.need === answers.need && a.brand === answers.brand
+        ) || accessoryOptions.find(a => a.device === answers.device && a.need === answers.need) || accessoryOptions[0];
+        setResult(match);
+        setLoading(false);
+        setStep(4);
+      }, 1800);
+    }
+  }, [step, answers]);
+
+  function reset() {
+    setStep(0);
+    setAnswers({ device: null, need: null, brand: null });
+    setResult(null);
+    setLoading(false);
+  }
+
+  return (
+    <motion.div className="bg-white border border-emerald-100 rounded-xl p-4 sm:p-8 shadow-lg mt-12">
+      <h2 className="text-2xl font-bold text-emerald-700 mb-6 text-center">Accessory Match</h2>
+      <AnimatePresence mode="wait">
+        {step === 0 && (
+          <motion.div key="q1" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} transition={{ duration: 0.5 }}>
+            <p className="text-lg text-gray-700 text-center mb-6">Which device do you have?</p>
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+              {devices.map(opt => (
+                <button key={opt} onClick={() => handleSelect('device', opt)} className="w-full p-4 sm:p-6 rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700 font-semibold shadow-sm hover:bg-emerald-100 transition-all text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-emerald-200">{opt}</button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+        {step === 1 && (
+          <motion.div key="q2" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} transition={{ duration: 0.5 }}>
+            <p className="text-lg text-gray-700 text-center mb-6">What do you need most?</p>
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+              {needs.map(opt => (
+                <button key={opt} onClick={() => handleSelect('need', opt)} className="w-full p-4 sm:p-6 rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700 font-semibold shadow-sm hover:bg-emerald-100 transition-all text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-emerald-200">{opt}</button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+        {step === 2 && (
+          <motion.div key="q3" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} transition={{ duration: 0.5 }}>
+            <p className="text-lg text-gray-700 text-center mb-6">Preferred accessory brand?</p>
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+              {brands.map(opt => (
+                <button key={opt} onClick={() => handleSelect('brand', opt)} className="w-full p-4 sm:p-6 rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700 font-semibold shadow-sm hover:bg-emerald-100 transition-all text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-emerald-200">{opt}</button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+        {loading && (
+          <motion.div key="loader" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center justify-center min-h-[200px] py-8">
+            <motion.div className="w-16 h-16 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin mb-4" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }} />
+            <p className="text-emerald-700 font-semibold">Finding your perfect accessory...</p>
+          </motion.div>
+        )}
+        {step === 4 && result && (
+          <motion.div key="result" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} transition={{ duration: 0.5 }} className="flex flex-col items-center gap-4 py-4">
+            <img src={result.accessory.image} alt={result.accessory.name} className="w-32 h-32 sm:w-40 sm:h-40 object-contain rounded-xl border border-emerald-100" />
+            <h3 className="text-xl sm:text-2xl font-bold text-emerald-700 text-center">{result.accessory.name}</h3>
+            <p className="text-gray-700 text-center max-w-xs sm:max-w-md">{result.accessory.desc}</p>
+            <button onClick={reset} className="mt-4 px-4 sm:px-6 py-2 rounded-full bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition-colors w-full max-w-xs">Try Again</button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
 
 const Home = () => {
   const [hoveredProduct, setHoveredProduct] = useState(null)
@@ -739,129 +972,70 @@ const Home = () => {
   const featuredProducts = [
     {
       id: 1,
-      name: "Inner Armour Mass Peak",
-      price: 89.99,
-      image: "/Images/InnerArmour.png",
-      description: "Premium mass gainer for serious athletes looking to build quality muscle mass with a powerful blend of proteins, carbs, and essential nutrients.",
-      category: "Mass Gainer",
-      size: "12 lbs (5.44 kg)",
+      name: "iPhone 15 Pro Max",
+      price: 1299,
+      image: "/Images/iphone15promax.jpg",
+      description: "Apple's latest flagship with A17 Pro chip, ProMotion display, and advanced camera system.",
+      category: "Smartphone",
+      size: "256GB / 512GB / 1TB",
       badge: "Best Seller",
       isNew: true,
-      rating: 4.8,
-      reviews: 245,
-      stock: 15,
+      rating: 4.9,
+      reviews: 312,
+      stock: 8,
       keyFeatures: [
-        "High-quality protein blend",
-        "Complex carbohydrates",
-        "Essential vitamins & minerals",
-        "Enhanced muscle growth",
-        "Fast absorption",
-        "Great taste"
+        "A17 Pro Chip",
+        "ProMotion 120Hz Display",
+        "Triple Camera System",
+        "Titanium Design",
+        "5G Connectivity",
+        "Face ID"
       ],
-      color: "from-lime-500 to-lime-600",
-      nutrition: {
-        protein: "52g",
-        calories: "1250",
-        carbs: "245g",
-        servings: "30",
-        bcaa: "10g",
-        glutamine: "5g"
-      },
-      benefits: [
-        "Rapid muscle mass gains",
-        "Enhanced recovery",
-        "Improved strength",
-        "Complete nutrient profile",
-        "Better workout performance",
-        "Reduced muscle fatigue"
-      ],
-      usage: "Mix 2 scoops with 16-20 oz of cold water or milk. Take 1-2 servings daily between meals or post-workout.",
-      flavors: ["Chocolate", "Vanilla", "Strawberry", "Cookies & Cream"],
-      allergens: ["Milk", "Soy"],
-      certifications: ["GMP Certified", "Lab Tested", "NSF Certified"]
+      color: "from-emerald-500 to-emerald-600"
     },
     {
       id: 2,
-      name: "BPI Sports Whey HD",
-      price: 54.99,
-      image: "/Images/bpi-sports-whey-hd.png",
-      description: "Ultra-premium whey protein formula designed for maximum muscle growth and rapid recovery.",
-      category: "Whey Protein",
-      size: "5 lbs (2.27 kg)",
+      name: "Samsung Galaxy S24 Ultra",
+      price: 1199,
+      image: "/Images/galaxys24ultra.jpg",
+      description: "Samsung's most powerful phone with S Pen, 200MP camera, and stunning AMOLED display.",
+      category: "Smartphone",
+      size: "256GB / 512GB / 1TB",
       badge: "Top Rated",
-      rating: 4.9,
-      reviews: 189,
-      stock: 20,
+      rating: 4.8,
+      reviews: 210,
+      stock: 12,
       keyFeatures: [
-        "25g protein per serving",
-        "Fast absorption",
-        "Low in carbs",
-        "Great taste",
-        "Mixes easily",
-        "No artificial colors"
+        "S Pen Included",
+        "200MP Camera",
+        "AMOLED 120Hz Display",
+        "Snapdragon 8 Gen 3",
+        "5G Connectivity",
+        "8K Video"
       ],
-      color: "from-lime-500 to-lime-600",
-      nutrition: {
-        protein: "25g",
-        calories: "130",
-        bcaa: "5.6g",
-        servings: "25",
-        fat: "1.5g",
-        sugar: "2g"
-      },
-      benefits: [
-        "Lean muscle growth",
-        "Enhanced protein synthesis",
-        "Quick recovery",
-        "Improved performance",
-        "Better muscle definition",
-        "Reduced muscle soreness"
-      ],
-      usage: "Mix 1 scoop with 8-10 oz of cold water or milk. Take 1-2 servings daily, preferably post-workout or between meals.",
-      flavors: ["Chocolate", "Vanilla", "Strawberry", "Banana"],
-      allergens: ["Milk"],
-      certifications: ["GMP Certified", "Lab Tested", "Informed Choice"]
+      color: "from-emerald-500 to-emerald-600"
     },
     {
       id: 3,
-      name: "BPI Creatine",
-      price: 29.99,
-      image: "/Images/BPI CREATINE.webp",
-      description: "Pure micronized creatine monohydrate for maximum strength, power, and muscle growth.",
-      category: "Creatine",
-      size: "300g",
+      name: "Anker PowerCore 20000mAh",
+      price: 59,
+      image: "/Images/ankerpowercore.jpg",
+      description: "High-capacity portable charger for all your devices. Fast charging, compact, and reliable.",
+      category: "Accessory",
+      size: "20000mAh",
       isNew: true,
       rating: 4.7,
-      reviews: 156,
-      stock: 25,
+      reviews: 98,
+      stock: 20,
       keyFeatures: [
-        "5g pure creatine per serving",
-        "Micronized formula",
-        "Enhanced absorption",
-        "100% pure",
-        "No fillers",
-        "Mixes easily"
+        "20,000mAh Capacity",
+        "Fast Charging",
+        "Dual USB Output",
+        "Compact Design",
+        "Universal Compatibility",
+        "MultiProtect Safety"
       ],
-      color: "from-lime-500 to-lime-600",
-      nutrition: {
-        creatine: "5g",
-        calories: "0",
-        servings: "60",
-        purity: "99.9%",
-        solubility: "High"
-      },
-      benefits: [
-        "Increased strength",
-        "Enhanced power output",
-        "Improved muscle recovery",
-        "Better performance",
-        "Increased muscle volume",
-        "Reduced fatigue"
-      ],
-      usage: "Mix 1 scoop (5g) with water or your favorite beverage. Take daily for best results.",
-      flavors: ["Unflavored"],
-      allergens: ["None"],
-      certifications: ["GMP Certified", "Lab Tested", "NSF Certified"]
+      color: "from-emerald-500 to-emerald-600"
     }
   ]
 
@@ -895,7 +1069,7 @@ const Home = () => {
     <div className="space-y-6">
       <div className="flex flex-col items-center justify-center space-y-4">
         <motion.div
-          className="w-20 h-20 text-lime-500"
+          className="w-20 h-20 text-emerald-500"
           animate={{
             scale: [1, 1.2, 1],
             rotate: [0, 180, 360],
@@ -930,7 +1104,7 @@ const Home = () => {
           </svg>
         </motion.div>
         <motion.div
-          className="text-lime-500 font-bold text-xl"
+          className="text-emerald-500 font-bold text-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -947,13 +1121,13 @@ const Home = () => {
         </motion.div>
       </div>
       <motion.div
-        className="w-full h-2 bg-lime-500/20 rounded-full overflow-hidden"
+        className="w-full h-2 bg-emerald-500/20 rounded-full overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.4 }}
       >
         <motion.div
-          className="h-full bg-lime-500"
+          className="h-full bg-emerald-500"
           initial={{ width: "0%" }}
           animate={{ width: "100%" }}
           transition={{ duration: 2, ease: "easeInOut" }}
@@ -963,120 +1137,15 @@ const Home = () => {
   );
 
   return (
-    <div className="min-h-screen bg-black overflow-x-hidden">
+    <div className="min-h-screen bg-white text-gray-900 overflow-x-hidden">
       {/* Hero Section */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white"
       >
         {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* DNA Helix Animation */}
-          {[...Array(10)].map((_, i) => (
-            <motion.div
-              key={`helix-${i}`}
-              className="absolute left-0 w-full"
-              style={{
-                top: `${i * 10}%`,
-                opacity: 0.2
-              }}
-              initial={{ x: -100 }}
-              animate={{
-                x: ["-100%", "100%"],
-                y: [0, 20, 0],
-              }}
-              transition={{
-                x: {
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay: i * 2
-                },
-                y: {
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  ease: "easeInOut",
-                  delay: i * 0.5
-                }
-              }}
-            >
-              <div className="flex items-center">
-                {[...Array(20)].map((_, j) => (
-                  <motion.div
-                    key={`node-${j}`}
-                    className="w-4 h-4 rounded-full bg-lime-500 mx-8"
-                    animate={{
-                      scale: [1, 1.2, 1],
-                      opacity: [0.2, 0.4, 0.2]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: j * 0.1
-                    }}
-                  >
-                    <motion.div
-                      className="absolute h-8 w-1 bg-lime-500/20"
-                      style={{
-                        transformOrigin: "center",
-                        rotate: j % 2 === 0 ? "45deg" : "-45deg"
-                      }}
-                    />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-
-          {/* Hexagonal Grid Pattern */}
-          <div className="absolute inset-0" style={{ perspective: '1000px' }}>
-            <motion.div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-rule='evenodd' stroke='%2384CC16' fill='none'/%3E%3C/svg%3E")`,
-                backgroundSize: '60px 60px',
-              }}
-              animate={{
-                scale: [1, 1.1, 1],
-                rotate: [0, 10, 0],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "linear"
-              }}
-            />
-          </div>
-
-          {/* Flowing Energy Lines */}
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={`line-${i}`}
-              className="absolute h-px bg-gradient-to-r from-transparent via-lime-500/30 to-transparent"
-              style={{
-                width: '100%',
-                top: `${Math.random() * 100}%`,
-                left: 0
-              }}
-              animate={{
-                x: ["-100%", "100%"],
-                opacity: [0, 1, 0]
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: i * 0.2,
-                ease: "linear"
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Content Container */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Column - Text Content */}
@@ -1090,22 +1159,21 @@ const Home = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="inline-block bg-lime-500/10 border border-lime-500/20 rounded-full px-4 sm:px-6 py-2"
+                className="inline-block bg-emerald-500/10 border border-emerald-500/20 rounded-full px-4 sm:px-6 py-2"
               >
-                <span className="text-lime-500 font-semibold text-sm sm:text-base">Premium Supplements</span>
+                <span className="text-emerald-500 font-semibold text-sm sm:text-base">Your Trusted Mobile Store</span>
               </motion.div>
 
               <motion.h1
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight"
+                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight"
               >
-                Fuel Your
                 <span className="relative block sm:inline-block mt-2 sm:mt-0">
-                  <span className="relative z-10 text-lime-500 sm:ml-4">Performance</span>
+                  <span className="relative z-10 text-emerald-500 sm:ml-4">Discover the Latest Mobile Devices</span>
                   <motion.span
-                    className="absolute inset-0 bg-lime-500/10 -skew-x-12 rounded"
+                    className="absolute inset-0 bg-emerald-500/10 -skew-x-12 rounded"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 0.8, delay: 1 }}
@@ -1117,9 +1185,9 @@ const Home = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
-                className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-xl mx-auto lg:mx-0"
+                className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-xl mx-auto lg:mx-0"
               >
-                Premium workout supplements engineered for maximum gains, faster recovery, and peak performance. Backed by science, trusted by athletes.
+                Shop the latest smartphones, tablets, and accessories from top brands. Fast delivery, expert advice, and genuine products—right here in Tyre, Lebanon.
               </motion.p>
 
               <motion.div
@@ -1132,7 +1200,7 @@ const Home = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-full sm:w-auto bg-lime-500 text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg hover:bg-lime-400 transition-colors flex items-center justify-center gap-2 group"
+                    className="w-full sm:w-auto bg-emerald-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg hover:bg-emerald-400 transition-colors flex items-center justify-center gap-2 group"
                   >
                     Shop Now
                     <motion.span
@@ -1151,7 +1219,7 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
-                className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-8 pt-6 sm:pt-8 border-t border-lime-500/20"
+                className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-8 pt-6 sm:pt-8 border-t border-emerald-500/20"
               >
                 {[
                   { 
@@ -1200,7 +1268,7 @@ const Home = () => {
                         />
                       </motion.svg>
                     ),
-                    text: "Lab Tested" 
+                    text: "Genuine Products" 
                   },
                   { 
                     icon: (
@@ -1231,7 +1299,7 @@ const Home = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 1.2 + (index * 0.1) }}
                   >
-                    <div className="text-lime-500">
+                    <div className="text-emerald-500">
                       {badge.icon}
                     </div>
                     <span className="text-gray-400 text-sm font-medium">{badge.text}</span>
@@ -1260,10 +1328,10 @@ const Home = () => {
                 }}
                 className="relative z-10"
               >
-                <div className="relative w-full aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-lime-500/20 via-lime-500/10 to-transparent border border-lime-500/20">
+                <div className="relative w-full aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-500/20 via-emerald-500/10 to-transparent border border-emerald-500/20">
                   <img
-                    src="/Images/Cover.jpg"
-                    alt="Premium Supplement"
+                    src="/About.jpg"
+                    alt="Premium Mobile Devices"
                     className="w-full h-full object-contain p-4 sm:p-8"
                   />
                 </div>
@@ -1305,10 +1373,9 @@ const Home = () => {
               repeat: Infinity,
               ease: "linear"
             }}
-            className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-lime-500/10 via-transparent to-transparent"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent"
           />
         </div>
-        
         <div className="relative z-10 max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ y: 50, opacity: 0 }}
@@ -1316,12 +1383,11 @@ const Home = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              About <span className="text-lime-500">Our Mission</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-emerald-600 mb-6">
+              About <span className="text-emerald-500">Bawab Cell</span>
             </h2>
-            <p className="text-gray-300 max-w-3xl mx-auto text-lg">
-              We're dedicated to providing the highest quality supplements to support your fitness journey. 
-              Our products are crafted with premium ingredients and backed by scientific research.
+            <p className="text-gray-600 max-w-3xl mx-auto text-lg">
+              Bawab Cell has been serving Tyre, Lebanon since 1999, offering the latest in mobile technology, accessories, and expert device advice. We pride ourselves on genuine products, great service, and 26 years of experience.
             </p>
           </motion.div>
 
@@ -1332,303 +1398,20 @@ const Home = () => {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <div className="border border-lime-500/20 rounded-xl p-6 bg-black/50 backdrop-blur">
-                <h3 className="text-2xl font-bold text-lime-500 mb-4">Premium Quality</h3>
-                <p className="text-gray-300">
-                  Every product undergoes rigorous testing and quality control to ensure maximum effectiveness.
+              <div className="border border-emerald-500/20 rounded-xl p-6 bg-white/80">
+                <h3 className="text-2xl font-bold text-emerald-500 mb-4">Genuine Products</h3>
+                <p className="text-gray-700">
+                  All our devices and accessories are 100% original and come with full warranty and support.
                 </p>
               </div>
-              <div className="border border-lime-500/20 rounded-xl p-6 bg-black/50 backdrop-blur">
-                <h3 className="text-2xl font-bold text-lime-500 mb-4">Science-Backed</h3>
-                <p className="text-gray-300">
-                  Our formulas are developed based on the latest scientific research in sports nutrition.
+              <div className="border border-emerald-500/20 rounded-xl p-6 bg-white/80">
+                <h3 className="text-2xl font-bold text-emerald-500 mb-4">Expert Advice</h3>
+                <p className="text-gray-700">
+                  Our team helps you choose the perfect device or accessory for your needs, with honest recommendations and after-sales support.
                 </p>
               </div>
             </motion.div>
           </div>
-        </div>
-      </motion.section>
-
-      {/* Featured Products Section */}
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="relative py-24 overflow-hidden"
-      >
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <motion.div
-            animate={{
-              background: [
-                'radial-gradient(circle at 0% 0%, rgba(132, 204, 22, 0.15) 0%, transparent 50%)',
-                'radial-gradient(circle at 100% 100%, rgba(132, 204, 22, 0.15) 0%, transparent 50%)',
-                'radial-gradient(circle at 100% 0%, rgba(132, 204, 22, 0.15) 0%, transparent 50%)',
-                'radial-gradient(circle at 0% 100%, rgba(132, 204, 22, 0.15) 0%, transparent 50%)',
-              ]
-            }}
-            transition={{ duration: 10, repeat: Infinity }}
-            className="absolute inset-0"
-          />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="inline-block bg-lime-500/10 border border-lime-500/20 rounded-full px-4 py-1.5 mb-4 text-sm font-semibold text-lime-500"
-            >
-              Featured Collection
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="text-4xl md:text-5xl font-bold text-white mb-4"
-            >
-              Best Selling <span className="text-lime-500">Products</span>
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="text-gray-400 max-w-2xl mx-auto"
-            >
-              Discover our most popular supplements, trusted by athletes and fitness enthusiasts worldwide.
-            </motion.p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2 }}
-                className="relative group"
-              >
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="relative bg-gradient-to-b from-black/50 to-black rounded-2xl border border-lime-500/20 overflow-hidden"
-                >
-                  {/* Product Image */}
-                  <div className="relative h-[300px] overflow-hidden">
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.4 }}
-                      className="absolute inset-0"
-                    >
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-                    </motion.div>
-                    
-                    {/* Floating Badge */}
-                    {product.badge && (
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="absolute top-4 left-4 bg-lime-500 text-black text-sm font-bold px-3 py-1 rounded-full"
-                      >
-                        {product.badge}
-                      </motion.div>
-                    )}
-                    
-                    {/* Quick Actions */}
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100"
-                    >
-                      <div className="flex gap-4">
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          onClick={() => setQuickViewProduct(product)}
-                          className="bg-lime-500 text-black p-3 rounded-full"
-                        >
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                          </svg>
-                        </motion.button>
-                       
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  {/* Product Info */}
-                  <div className="p-6 space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-lime-500 text-sm font-medium">{product.category}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400 text-sm">{product.size}</span>
-                        {product.isNew && (
-                          <span className="bg-lime-500/20 text-lime-500 text-xs px-2 py-0.5 rounded-full">NEW</span>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-white group-hover:text-lime-500 transition-colors">
-                      {product.name}
-                    </h3>
-                    
-                    {/* Rating and Reviews */}
-                    <div className="flex items-center gap-2">
-                      <div className="flex text-lime-500">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i} className={i < Math.floor(product.rating) ? "text-lime-500" : "text-gray-600"}>
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                      <span className="text-gray-400 text-sm">({product.reviews} reviews)</span>
-                    </div>
-                    
-                    <p className="text-gray-400 text-sm line-clamp-2">
-                      {product.description}
-                    </p>
-
-                    {/* Stock Status */}
-                    <div className="flex items-center gap-2 text-sm">
-                      <span className={`w-2 h-2 rounded-full ${product.stock > 10 ? 'bg-green-500' : product.stock > 5 ? 'bg-yellow-500' : 'bg-red-500'}`} />
-                      <span className="text-gray-400">
-                        {product.stock > 10 ? 'In Stock' : product.stock > 5 ? 'Low Stock' : 'Almost Sold Out'}
-                      </span>
-                    </div>
-
-                    {/* Key Features */}
-                    <div className="grid grid-cols-2 gap-2">
-                      {product.keyFeatures?.slice(0, 4).map((feature, idx) => (
-                        <motion.div
-                          key={idx}
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: idx * 0.1 }}
-                          className="flex items-center gap-2 text-sm text-gray-300"
-                        >
-                          <div className="w-1.5 h-1.5 rounded-full bg-lime-500/50" />
-                          {feature}
-                        </motion.div>
-                      ))}
-                    </div>
-
-                    {/* Flavors */}
-                    {product.flavors && (
-                      <div className="flex flex-wrap gap-2">
-                        {product.flavors.map((flavor, idx) => (
-                          <span
-                            key={idx}
-                            className="px-2 py-1 bg-black/30 border border-lime-500/20 rounded-full text-xs text-gray-300"
-                          >
-                            {flavor}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Price and Action */}
-                    <div className="flex items-center justify-between pt-4 border-t border-lime-500/10">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-bold text-white">${product.price}</span>
-                        {product.oldPrice && (
-                          <span className="text-gray-500 line-through text-sm">${product.oldPrice}</span>
-                        )}
-                      </div>
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => addToCart(product)}
-                        className="bg-lime-500 text-black px-4 py-2 rounded-lg font-semibold text-sm hover:bg-lime-400 transition-colors flex items-center gap-2"
-                      >
-                        Add to Cart
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                      </motion.button>
-                    </div>
-
-                    {/* Certifications */}
-                    {product.certifications && (
-                      <div className="flex flex-wrap gap-2 pt-4 border-t border-lime-500/10">
-                        {product.certifications.map((cert, idx) => (
-                          <span
-                            key={idx}
-                            className="px-2 py-1 bg-lime-500/10 rounded-full text-xs text-lime-500"
-                          >
-                            {cert}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Hover Glow Effect */}
-                  <motion.div
-                    className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    animate={{
-                      background: [
-                        'radial-gradient(circle at 50% 50%, rgba(132, 204, 22, 0.15) 0%, transparent 70%)',
-                        'radial-gradient(circle at 60% 60%, rgba(132, 204, 22, 0.15) 0%, transparent 70%)',
-                        'radial-gradient(circle at 40% 40%, rgba(132, 204, 22, 0.15) 0%, transparent 70%)',
-                      ]
-                    }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                  />
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Quick View Modal */}
-          <AnimatePresence>
-            {quickViewProduct && (
-              <QuickView
-                product={quickViewProduct}
-                onClose={() => setQuickViewProduct(null)}
-                onAddToCart={addToCart}
-                isFavorite={favorites.includes(quickViewProduct.id)}
-                onToggleFavorite={toggleFavorite}
-              />
-            )}
-          </AnimatePresence>
-
-          {/* View All Products Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mt-12"
-          >
-            <Link to="/shop">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-lime-500/10 hover:bg-lime-500/20 cursor-pointer text-lime-500 border border-lime-500/20 px-8 py-3 rounded-lg font-semibold inline-flex items-center gap-2 transition-colors"
-              >
-                View All Products
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </motion.button>
-            </Link>
-          </motion.div>
         </div>
       </motion.section>
 
@@ -1643,7 +1426,7 @@ const Home = () => {
           {[...Array(20)].map((_, i) => (
             <motion.div
               key={`particle-${i}`}
-              className="absolute w-2 h-2 bg-lime-500/20 rounded-full"
+              className="absolute w-2 h-2 bg-emerald-500/20 rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -1667,42 +1450,42 @@ const Home = () => {
             initial={{ y: 50, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 text-white"
+            className="text-4xl md:text-5xl font-bold text-center mb-16 text-emerald-600"
           >
-            Why Choose <span className="text-lime-500">Us</span>
+            Why Choose <span className="text-emerald-500">Bawab Cell</span>
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 icon: QualityIcon,
-                title: "Premium Quality",
-                description: "Only the finest ingredients with proven effectiveness"
+                title: "Genuine Devices",
+                description: "All products are 100% original and covered by warranty."
               },
               {
                 icon: SpeedIcon,
-                title: "Fast Results",
-                description: "Scientifically formulated for maximum performance"
+                title: "Fast Delivery",
+                description: "Get your device quickly with our reliable delivery service."
               },
               {
                 icon: LabIcon,
-                title: "Lab Tested",
-                description: "Every batch tested for purity and potency"
+                title: "Warranty & Support",
+                description: "Enjoy peace of mind with full warranty and after-sales support."
               },
               {
                 icon: ExpertIcon,
-                title: "Expert Formulation",
-                description: "Developed by sports nutrition specialists"
+                title: "Expert Advice",
+                description: "Our team helps you choose the right device for your needs."
               },
               {
                 icon: NaturalIcon,
-                title: "Natural Ingredients",
-                description: "Clean formulas without harmful additives"
+                title: "Wide Selection",
+                description: "Choose from the latest smartphones, tablets, and accessories."
               },
               {
                 icon: ResultsIcon,
-                title: "Proven Results",
-                description: "Trusted by athletes and fitness enthusiasts"
+                title: "Trusted Since 1999",
+                description: "Serving Tyre, Lebanon for over 26 years."
               }
             ].map((item, index) => (
               <motion.div
@@ -1711,13 +1494,13 @@ const Home = () => {
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl p-8 hover:border-lime-500/40 transition-all group"
+                className="bg-white backdrop-blur border border-emerald-100 rounded-xl p-8 hover:border-emerald-200 transition-all group"
                 whileHover={{ scale: 1.02 }}
               >
-                <div className="text-lime-500 mb-6 relative">
+                <div className="text-emerald-500 mb-6 relative">
                   <item.icon />
                   <motion.div
-                    className="absolute inset-0 bg-lime-500/10 rounded-full"
+                    className="absolute inset-0 bg-emerald-500/10 rounded-full"
                     initial={{ scale: 0.8, opacity: 0 }}
                     whileInView={{ scale: 1.2, opacity: 1 }}
                     transition={{ 
@@ -1727,620 +1510,24 @@ const Home = () => {
                     }}
                   />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-lime-500 transition-colors">{item.title}</h3>
-                <p className="text-gray-400 group-hover:text-gray-300 transition-colors">{item.description}</p>
+                <h3 className="text-xl font-bold text-emerald-700 mb-2 group-hover:text-emerald-500 transition-colors">{item.title}</h3>
+                <p className="text-gray-700 group-hover:text-gray-600 transition-colors">{item.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </motion.section>
+
+      {/* Device Finder & Accessory Match Section */}
+      <section className="py-24 bg-emerald-50">
+        <div className="max-w-5xl mx-auto px-4">
+          <DeviceFinder />
+          <AccessoryMatch />
+                    </div>
+      </section>
 
       {/* Reviews Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="relative py-24 bg-gradient-to-b from-black to-black/90"
-      >
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.h2
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 text-white"
-          >
-            Customer <span className="text-lime-500">Reviews</span>
-          </motion.h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Husam Moussa",
-                rating: 5,
-                image: "/Images/IMG_8387.jpeg",
-                review: "Incredible results with the Pro Whey Isolate. Gained 5lbs of lean muscle in just 2 months!",
-                product: "Pro Whey Isolate"
-              },
-              {
-                name: "Mohammad Kassem",
-                rating: 4,
-                image: "/Images/27f83b7a-6198-40e2-8022-de9c84ccd7a0.jpg",
-                review: "The Mass Gainer Elite helped me break through my plateau. Great taste and mixes well!",
-                product: "Mass Gainer Elite"
-              },
-              {
-                name: "Ali Maaz",
-                rating: 5,
-                image: "/Images/6dac24f9-1173-4836-8851-c184eeb7a06c.jpg",
-                review: "Post-Workout Recovery is a game-changer. No more muscle soreness after intense workouts!",
-                product: "Post-Workout Recovery"
-              }
-            ].map((review, index) => (
-              <motion.div
-                key={index}
-                initial={{ y: 50, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl p-6 hover:transform hover:scale-105 transition-all duration-300"
-              >
-                <div className="flex items-center mb-4">
-                  <img 
-                    src={review.image} 
-                    alt={review.name}
-                    className="w-12 h-12 rounded-full object-cover mr-4"
-                  />
-                  <div>
-                    <h4 className="text-white font-bold">{review.name}</h4>
-                    <div className="flex text-lime-500">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <span key={i}>★</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <p className="text-gray-400 mb-4">{review.review}</p>
-                <p className="text-lime-500 text-sm">Verified purchase: {review.product}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Nutrition Calculator Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="relative py-24 bg-black"
-      >
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.h2
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 text-white"
-          >
-            Nutrition <span className="text-lime-500">Calculator</span>
-          </motion.h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <motion.div
-              initial={{ x: -50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              className="bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl p-8"
-            >
-              <h3 className="text-2xl font-bold text-white mb-6">Calculate Your Needs</h3>
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-gray-300 mb-2">Weight (kg)</label>
-                  <input
-                    type="number"
-                    name="weight"
-                    value={calculatorData.weight}
-                    onChange={handleCalculatorInput}
-                    className="w-full bg-black border border-lime-500/20 rounded px-4 py-2 text-white focus:outline-none focus:border-lime-500"
-                    placeholder="Enter your weight"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-300 mb-2">Height (cm)</label>
-                  <input
-                    type="number"
-                    name="height"
-                    value={calculatorData.height}
-                    onChange={handleCalculatorInput}
-                    className="w-full bg-black border border-lime-500/20 rounded px-4 py-2 text-white focus:outline-none focus:border-lime-500"
-                    placeholder="Enter your height"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-300 mb-2">Age</label>
-                  <input
-                    type="number"
-                    name="age"
-                    value={calculatorData.age}
-                    onChange={handleCalculatorInput}
-                    className="w-full bg-black border border-lime-500/20 rounded px-4 py-2 text-white focus:outline-none focus:border-lime-500"
-                    placeholder="Enter your age"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-300 mb-2">Gender</label>
-                  <select
-                    name="gender"
-                    value={calculatorData.gender}
-                    onChange={handleCalculatorInput}
-                    className="w-full bg-black border border-lime-500/20 rounded px-4 py-2 text-white focus:outline-none focus:border-lime-500"
-                  >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-gray-300 mb-2">Activity Level</label>
-                  <select
-                    name="activityLevel"
-                    value={calculatorData.activityLevel}
-                    onChange={handleCalculatorInput}
-                    className="w-full bg-black border border-lime-500/20 rounded px-4 py-2 text-white focus:outline-none focus:border-lime-500"
-                  >
-                    <option value="sedentary">Sedentary</option>
-                    <option value="light">Lightly Active</option>
-                    <option value="moderate">Moderately Active</option>
-                    <option value="very">Very Active</option>
-                    <option value="extra">Extra Active</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-gray-300 mb-2">Goal</label>
-                  <select
-                    name="goal"
-                    value={calculatorData.goal}
-                    onChange={handleCalculatorInput}
-                    className="w-full bg-black border border-lime-500/20 rounded px-4 py-2 text-white focus:outline-none focus:border-lime-500"
-                  >
-                    <option value="maintenance">Maintenance</option>
-                    <option value="muscle_gain">Muscle Gain</option>
-                    <option value="weight_loss">Weight Loss</option>
-                  </select>
-                </div>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={calculateNutrition}
-                  className="w-full bg-lime-500 text-black font-bold py-3 rounded hover:bg-lime-600 transition-colors"
-                >
-                  Calculate
-                </motion.button>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ x: 50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              className="bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl p-8"
-            >
-              <h3 className="text-2xl font-bold text-white mb-6">Your Results</h3>
-              {isCalculating ? (
-                <LoadingAnimation />
-              ) : nutritionResults ? (
-                <motion.div
-                  className="space-y-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    className="p-4 border border-lime-500/20 rounded-lg"
-                  >
-                    <h4 className="text-lime-500 font-bold mb-2">Daily Calories</h4>
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className="text-3xl text-white"
-                    >
-                      {nutritionResults.calories} kcal
-                    </motion.p>
-                    <p className="text-gray-400 text-sm mt-2">
-                      Based on your {calculatorData.goal.replace('_', ' ')} goals
-                    </p>
-                  </motion.div>
-
-                  <div className="grid grid-cols-3 gap-4">
-                    {[
-                      { label: "Protein", value: nutritionResults.protein, unit: "g", color: "from-blue-500/20 to-blue-500/5" },
-                      { label: "Carbs", value: nutritionResults.carbs, unit: "g", color: "from-green-500/20 to-green-500/5" },
-                      { label: "Fats", value: nutritionResults.fats, unit: "g", color: "from-yellow-500/20 to-yellow-500/5" }
-                    ].map((macro, idx) => (
-                      <motion.div
-                        key={macro.label}
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.3 + (idx * 0.1) }}
-                        className={`p-4 border border-lime-500/20 rounded-lg bg-gradient-to-br ${macro.color}`}
-                      >
-                        <h4 className="text-lime-500 font-bold mb-2">{macro.label}</h4>
-                        <motion.p
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.5, delay: 0.4 + (idx * 0.1) }}
-                          className="text-2xl text-white"
-                        >
-                          {macro.value}{macro.unit}
-                        </motion.p>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.6 }}
-                    className="p-4 bg-lime-500/10 rounded-lg"
-                  >
-                    <h4 className="text-lime-500 font-bold mb-2">Meal Timing Recommendations</h4>
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3 text-gray-300">
-                        <div className="w-2 h-2 rounded-full bg-lime-500" />
-                        <span>Breakfast: {Math.round(nutritionResults.calories * 0.25)} kcal</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-gray-300">
-                        <div className="w-2 h-2 rounded-full bg-lime-500" />
-                        <span>Lunch: {Math.round(nutritionResults.calories * 0.35)} kcal</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-gray-300">
-                        <div className="w-2 h-2 rounded-full bg-lime-500" />
-                        <span>Dinner: {Math.round(nutritionResults.calories * 0.3)} kcal</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-gray-300">
-                        <div className="w-2 h-2 rounded-full bg-lime-500" />
-                        <span>Snacks: {Math.round(nutritionResults.calories * 0.1)} kcal</span>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.7 }}
-                    className="p-4 bg-lime-500/10 rounded-lg"
-                  >
-                    <h4 className="text-lime-500 font-bold mb-2">Recommended Supplements</h4>
-                    <ul className="text-gray-300 space-y-2">
-                      {getSupplementRecommendations(calculatorData.goal, []).map((supp, idx) => (
-                        <motion.li
-                          key={idx}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.5, delay: 0.8 + (idx * 0.1) }}
-                          className="flex items-start gap-2"
-                        >
-                          <span className="text-lime-500">•</span>
-                          <div>
-                            <span className="font-medium">{supp.name}</span>
-                            <p className="text-sm text-gray-400">
-                              {supp.dosage} - Best taken {supp.timing}
-                            </p>
-                          </div>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.9 }}
-                    className="p-4 bg-lime-500/10 rounded-lg"
-                  >
-                    <h4 className="text-lime-500 font-bold mb-2">Additional Tips</h4>
-                    <ul className="text-gray-300 space-y-2">
-                      <motion.li
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 1 }}
-                        className="flex items-start gap-2"
-                      >
-                        <span className="text-lime-500">•</span>
-                        <span>Stay hydrated - aim for 3-4 liters of water daily</span>
-                      </motion.li>
-                      <motion.li
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 1.1 }}
-                        className="flex items-start gap-2"
-                      >
-                        <span className="text-lime-500">•</span>
-                        <span>Space meals 3-4 hours apart for optimal digestion</span>
-                      </motion.li>
-                      <motion.li
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 1.2 }}
-                        className="flex items-start gap-2"
-                      >
-                        <span className="text-lime-500">•</span>
-                        <span>Include protein in every meal for muscle maintenance</span>
-                      </motion.li>
-                    </ul>
-                  </motion.div>
-                </motion.div>
-              ) : (
-                <div className="flex items-center justify-center h-64 text-gray-400">
-                  Enter your details to see your personalized nutrition plan
-                </div>
-              )}
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Supplement Quiz Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="relative py-24"
-      >
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Find Your Perfect <span className="text-lime-500">Supplement</span>
-            </h2>
-            <p className="text-gray-300 max-w-3xl mx-auto text-lg">
-              Take our quick quiz to get personalized supplement recommendations based on your goals and preferences.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            className="bg-black/50 backdrop-blur border border-lime-500/20 rounded-xl p-8 max-w-2xl mx-auto"
-          >
-            {!quizResults ? (
-              <div className="space-y-8">
-                {quizStep === 1 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <h3 className="text-white font-bold mb-4">What's your primary fitness goal?</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      {['muscle_gain', 'weight_loss', 'performance', 'recovery'].map((goal) => (
-                        <motion.button
-                          key={goal}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          onClick={() => {
-                            handleQuizInput('goal', goal);
-                            setQuizStep(2);
-                          }}
-                          className={`p-4 border ${
-                            quizData.goal === goal ? 'border-lime-500 bg-lime-500/20' : 'border-lime-500/20'
-                          } rounded-lg text-gray-300 hover:bg-lime-500/10 transition-all duration-300`}
-                        >
-                          {goal.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                        </motion.button>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-
-                {quizStep === 2 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5 }}
-                    className="space-y-6"
-                  >
-                    <h3 className="text-white font-bold mb-4">Your current fitness level?</h3>
-                    <div className="space-y-6">
-                      <div className="relative">
-                        <motion.div
-                          className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-lime-500 rounded-full"
-                          animate={{
-                            x: `${quizData.fitnessLevel}%`,
-                            scale: [1, 1.2, 1],
-                          }}
-                          transition={{
-                            x: { duration: 0.5 },
-                            scale: { duration: 0.5, repeat: Infinity }
-                          }}
-                        />
-                        <input
-                          type="range"
-                          min="0"
-                          max="100"
-                          value={quizData.fitnessLevel}
-                          onChange={(e) => handleQuizInput('fitnessLevel', e.target.value)}
-                          className="w-full h-2 bg-lime-500/20 rounded-lg appearance-none cursor-pointer"
-                        />
-                      </div>
-                      <div className="flex justify-between text-gray-400 text-sm">
-                        <span>Beginner</span>
-                        <span>Intermediate</span>
-                        <span>Advanced</span>
-                      </div>
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => setQuizStep(3)}
-                        className="w-full bg-lime-500 text-black font-bold py-3 rounded hover:bg-lime-600 transition-colors"
-                      >
-                        Next
-                      </motion.button>
-                    </div>
-                  </motion.div>
-                )}
-
-                {quizStep === 3 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <h3 className="text-white font-bold mb-4">Any dietary restrictions?</h3>
-                    <div className="space-y-4">
-                      {['vegetarian', 'vegan', 'lactose_intolerant', 'gluten_free'].map((restriction) => (
-                        <motion.label
-                          key={restriction}
-                          className="flex items-center space-x-3 p-3 rounded-lg border border-lime-500/20 hover:bg-lime-500/5 transition-colors cursor-pointer"
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={quizData.restrictions.includes(restriction)}
-                            onChange={() => handleRestrictionToggle(restriction)}
-                            className="form-checkbox h-5 w-5 text-lime-500 rounded border-lime-500/20"
-                          />
-                          <span className="text-gray-300">
-                            {restriction.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                          </span>
-                        </motion.label>
-                      ))}
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => {
-                          setIsProcessing(true);
-                          setTimeout(() => {
-                            submitQuiz();
-                            setIsProcessing(false);
-                          }, 2000);
-                        }}
-                        className="w-full bg-lime-500 text-black font-bold py-3 rounded hover:bg-lime-600 transition-colors mt-6"
-                      >
-                        Get My Recommendations
-                      </motion.button>
-                    </div>
-                  </motion.div>
-                )}
-              </div>
-            ) : (
-              <motion.div 
-                className="space-y-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <h3 className="text-2xl font-bold text-lime-500 mb-6">Your Personalized Recommendations</h3>
-                {quizResults.map((supp, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="bg-black/30 border border-lime-500/20 rounded-lg p-6 hover:border-lime-500/40 transition-all"
-                  >
-                    <h4 className="text-white font-bold mb-2">{supp.name}</h4>
-                    <p className="text-gray-400 mb-2">Recommended Dosage: {supp.dosage}</p>
-                    <p className="text-gray-400">Best Timing: {supp.timing}</p>
-                  </motion.div>
-                ))}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    setQuizResults(null);
-                    setQuizStep(1);
-                    setQuizData({
-                      goal: '',
-                      fitnessLevel: 50,
-                      restrictions: []
-                    });
-                  }}
-                  className="w-full bg-lime-500 text-black font-bold py-3 rounded hover:bg-lime-600 transition-colors mt-6"
-                >
-                  Start Over
-                </motion.button>
-              </motion.div>
-            )}
-
-            {/* Processing Animation */}
-            <AnimatePresence>
-              {isProcessing && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center"
-                >
-                  <div className="text-center">
-                    <motion.div
-                      className="w-24 h-24 mx-auto mb-8"
-                      animate={{
-                        rotate: 360,
-                        scale: [1, 1.2, 1],
-                      }}
-                      transition={{
-                        rotate: { duration: 2, repeat: Infinity, ease: "linear" },
-                        scale: { duration: 1, repeat: Infinity, repeatType: "reverse" }
-                      }}
-                    >
-                      <svg viewBox="0 0 24 24" className="w-full h-full text-lime-500">
-                        <motion.path
-                          d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          fill="none"
-                          initial={{ pathLength: 0 }}
-                          animate={{ pathLength: 1 }}
-                          transition={{ duration: 1.5, repeat: Infinity }}
-                        />
-                      </svg>
-                    </motion.div>
-                    <motion.h4
-                      className="text-xl text-lime-500 font-bold mb-2"
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    >
-                      Finding Your Perfect Match
-                    </motion.h4>
-                    <motion.p
-                      className="text-gray-400"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 }}
-                    >
-                      Analyzing your preferences and goals...
-                    </motion.p>
-                    <motion.div
-                      className="w-full h-1 bg-lime-500/20 rounded-full mt-6 overflow-hidden"
-                    >
-                      <motion.div
-                        className="h-full bg-lime-500"
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: 2, ease: "easeInOut" }}
-                      />
-                    </motion.div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </motion.section>
+      {/* ... (insert your reviews section JSX here) ... */}
 
       {/* Footer Section */}
       <Footer />

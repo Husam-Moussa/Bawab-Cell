@@ -11,10 +11,10 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import AdminPanel from './components/AdminPanel';
 import UserPage from './components/UserPage';
+import AdminPanel from './components/AdminPanel';
 import PublicRoute from './components/PublicRoute';
-import AdminRoute from './components/AdminRoute';
+import ProtectedAdminRoute from './components/ProtectedAdminRoute';
 import ProductDetailsRoute from './components/ProductDetailsRoute';
 import LoadingScreen from './components/LoadingScreen';
 
@@ -22,11 +22,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time (you can remove this in production)
+    // Show loader only on first load
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2500); // Show loading screen for 2.5 seconds
-
+    }, 2000); // Adjust duration as needed
     return () => clearTimeout(timer);
   }, []);
 
@@ -38,7 +37,7 @@ function App() {
             {isLoading ? (
               <LoadingScreen key="loading" />
             ) : (
-              <div className="flex flex-col min-h-screen bg-black text-white">
+              <div className="flex flex-col min-h-screen bg-white text-gray-900">
                 <Navbar />
                 <main className="flex-grow">
                   <Routes>
@@ -91,14 +90,6 @@ function App() {
                       }
                     />
                     <Route
-                      path="/admin"
-                      element={
-                        <AdminRoute>
-                          <AdminPanel />
-                        </AdminRoute>
-                      }
-                    />
-                    <Route
                       path="/user"
                       element={
                         <PublicRoute>
@@ -112,6 +103,14 @@ function App() {
                         <PublicRoute>
                           <ProductDetailsRoute />
                         </PublicRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin"
+                      element={
+                        <ProtectedAdminRoute>
+                          <AdminPanel />
+                        </ProtectedAdminRoute>
                       }
                     />
                   </Routes>

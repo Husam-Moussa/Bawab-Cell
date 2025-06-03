@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase/config';
+import { useAuth } from '../context/AuthContext';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const Signup = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { loginWithGoogle } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -95,16 +97,29 @@ const Signup = () => {
     }
   };
 
+  const handleGoogleSignUp = async () => {
+    setIsLoading(true);
+    setError('');
+    try {
+      const result = await loginWithGoogle();
+      navigate('/', { replace: true });
+    } catch (error) {
+      setError('Google sign up failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-white to-emerald-50 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md"
+        className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-emerald-100"
       >
-        <h1 className="text-3xl font-bold mb-6 text-lime-500">Sign Up</h1>
+        <h1 className="text-3xl font-bold mb-6 text-emerald-700 text-center">Sign Up</h1>
         {error && (
-          <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-lg mb-4">
+          <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4 text-center border border-red-200">
             {error}
           </div>
         )}
@@ -118,7 +133,7 @@ const Signup = () => {
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              className="w-full bg-gray-800 text-white p-2 rounded"
+              className="w-full bg-emerald-50 border border-emerald-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200"
               placeholder="Enter your full name"
               required
             />
@@ -130,7 +145,7 @@ const Signup = () => {
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full bg-gray-800 text-white p-2 rounded"
+              className="w-full bg-emerald-50 border border-emerald-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200"
               required
             />
           </div>
@@ -141,7 +156,7 @@ const Signup = () => {
               placeholder="Password (min. 6 characters)"
               value={formData.password}
               onChange={handleChange}
-              className="w-full bg-gray-800 text-white p-2 rounded"
+              className="w-full bg-emerald-50 border border-emerald-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200"
               required
             />
           </div>
@@ -152,22 +167,33 @@ const Signup = () => {
               placeholder="Confirm Password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full bg-gray-800 text-white p-2 rounded"
+              className="w-full bg-emerald-50 border border-emerald-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200"
               required
             />
           </div>
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full bg-lime-500 text-black px-4 py-2 rounded hover:bg-lime-600 transition-colors ${
-              isLoading ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+            className={`w-full bg-emerald-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors shadow-md ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             {isLoading ? 'Creating Account...' : 'Sign Up'}
           </button>
         </form>
-        <p className="mt-4 text-center text-white">
-          Already have an account? <Link to="/login" className="text-lime-500 hover:underline">Login</Link>
+        <div className="my-6 flex items-center gap-2">
+          <div className="flex-1 h-px bg-emerald-100" />
+          <span className="text-gray-400 text-sm">or</span>
+          <div className="flex-1 h-px bg-emerald-100" />
+        </div>
+        <button
+          onClick={handleGoogleSignUp}
+          disabled={isLoading}
+          className="w-full flex items-center justify-center gap-3 bg-white border border-emerald-200 text-emerald-700 font-semibold py-3 rounded-lg shadow hover:bg-emerald-50 transition-colors mb-2"
+        >
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-6 h-6" />
+          Sign up with Google
+        </button>
+        <p className="mt-4 text-center text-gray-500">
+          Already have an account? <Link to="/login" className="text-emerald-600 hover:underline font-semibold">Sign In</Link>
         </p>
       </motion.div>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
-import ProductDetails from './ProductDetails';
+import ProductDetail from './ProductDetail';
 
 const ProductDetailsRoute = () => {
   const location = useLocation();
@@ -10,7 +10,7 @@ const ProductDetailsRoute = () => {
     return <Navigate to="/shop" replace />;
   }
 
-  return <ProductDetails product={product} />;
+  return <ProductDetail product={product} onClose={() => window.history.back()} onAddToCart={() => {}} />;
 };
 
 export default ProductDetailsRoute; 

@@ -6,7 +6,7 @@ const Loader = ({ isLoading, onLoadingComplete }) => {
     // Simulate loading time (remove in production and replace with actual loading logic)
     const timer = setTimeout(() => {
       onLoadingComplete();
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [onLoadingComplete]);
@@ -73,7 +73,7 @@ const Loader = ({ isLoading, onLoadingComplete }) => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-white"
         >
           {/* Background Effects */}
           <div className="absolute inset-0 overflow-hidden">
@@ -132,8 +132,8 @@ const Loader = ({ isLoading, onLoadingComplete }) => {
                 animate="animate"
                 className="absolute inset-0 bg-lime-500/20 rounded-full blur-xl"
               />
-              <div className="relative bg-black/50 backdrop-blur-lg border border-lime-500/30 rounded-full p-8">
-                <svg className="w-24 h-24 text-lime-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div className="relative bg-white/80 backdrop-blur-lg border border-lime-500/30 rounded-full p-8">
+                <svg className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 text-lime-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <motion.path
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: 1 }}
@@ -154,12 +154,12 @@ const Loader = ({ isLoading, onLoadingComplete }) => {
               animate={{ opacity: 1, y: 0 }}
               className="text-center mb-8"
             >
-              <h2 className="text-2xl font-bold text-white mb-2">MC NUTRITION</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">BAWAB CELL</h2>
               <p className="text-lime-500">Loading your experience...</p>
             </motion.div>
 
             {/* Progress Bar */}
-            <div className="w-64 h-1 bg-black/50 rounded-full overflow-hidden backdrop-blur-lg border border-lime-500/30">
+            <div className="w-full max-w-xs h-1 bg-white/80 rounded-full overflow-hidden backdrop-blur-lg border border-lime-500/30">
               <motion.div
                 variants={progressVariants}
                 className="h-full bg-gradient-to-r from-lime-500/50 via-lime-500 to-lime-500/50"

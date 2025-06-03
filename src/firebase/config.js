@@ -5,13 +5,13 @@ import { getAnalytics } from 'firebase/analytics';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCAzuQGrzLRteRC4U3f23a4-_kzOhr7XmE",
-  authDomain: "mcnutrition-38855.firebaseapp.com",
-  projectId: "mcnutrition-38855",
-  storageBucket: "mcnutrition-38855.firebasestorage.app",
-  messagingSenderId: "243230550310",
-  appId: "1:243230550310:web:1a0e100b08a65b1e3df9e7",
-  measurementId: "G-T9R3QGRX2R"
+  apiKey: "AIzaSyALmjEIFgYenSD6Lb99sVwF4Sf4MFZlbOU",
+  authDomain: "bawab-cell-959ef.firebaseapp.com",
+  projectId: "bawab-cell-959ef",
+  storageBucket: "bawab-cell-959ef.firebasestorage.app",
+  messagingSenderId: "965727547862",
+  appId: "1:965727547862:web:e2cb3b7472e87801af7477",
+  measurementId: "G-GW6WZCXWF6"
 };
 
 const app = initializeApp(firebaseConfig);

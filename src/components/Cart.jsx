@@ -64,7 +64,7 @@ const Cart = ({ isOpen, onClose }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]"
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[60]"
           onClick={onClose}
         >
           <motion.div
@@ -72,30 +72,30 @@ const Cart = ({ isOpen, onClose }) => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed right-0 top-0 h-full w-full sm:w-[95%] md:w-[450px] bg-black/95 backdrop-blur border-l border-lime-500/20 overflow-hidden"
+            className="fixed right-0 top-0 h-full w-full sm:w-[95%] md:w-[450px] bg-white border-l border-emerald-200 overflow-hidden"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex-shrink-0 p-4 sm:p-6 border-b border-lime-500/10">
+              <div className="flex-shrink-0 p-4 sm:p-6 border-b border-emerald-100 bg-white">
                 <div className="flex justify-between items-center mb-2">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white">Your Cart</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-emerald-700">Your Cart</h2>
                   <button
                     onClick={onClose}
-                    className="text-gray-400 hover:text-white transition-colors p-1.5 sm:p-2 hover:bg-white/5 rounded-lg"
+                    className="text-gray-400 hover:text-emerald-700 transition-colors p-1.5 sm:p-2 hover:bg-emerald-50 rounded-lg"
                   >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
                 </div>
-                <p className="text-sm sm:text-base text-gray-400">
+                <p className="text-sm sm:text-base text-gray-500">
                   {itemCount} {itemCount === 1 ? 'item' : 'items'} in your cart
                 </p>
               </div>
 
               {/* Cart Items */}
-              <div className="flex-1 overflow-y-auto">
+              <div className="flex-1 overflow-y-auto bg-white">
                 {cartItems.length > 0 ? (
                   <div className="space-y-3 sm:space-y-4 p-3 sm:p-4">
                     {cartItems.map(item => (
@@ -105,11 +105,11 @@ const Cart = ({ isOpen, onClose }) => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="bg-black/50 border border-lime-500/20 rounded-xl p-3 sm:p-4 hover:border-lime-500/40 transition-colors group"
+                        className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 sm:p-4 hover:border-emerald-500/40 transition-colors group"
                       >
                         <div className="flex gap-3 sm:gap-4">
                           {/* Product Image */}
-                          <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden bg-black/50 flex-shrink-0">
+                          <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden bg-white flex-shrink-0 border border-emerald-50">
                             <img
                               src={item.image}
                               alt={item.name}
@@ -121,13 +121,27 @@ const Cart = ({ isOpen, onClose }) => {
                           <div className="flex-1 min-w-0">
                             <div className="flex justify-between items-start gap-2">
                               <div>
-                                <h3 className="text-sm sm:text-base text-white font-medium truncate">{item.name}</h3>
+                                <h3 className="text-sm sm:text-base text-emerald-900 font-medium truncate">{item.name}</h3>
                                 {item.category && (
-                                  <p className="text-xs sm:text-sm text-gray-400">{item.category}</p>
+                                  <p className="text-xs sm:text-sm text-gray-500">{item.category}</p>
+                                )}
+                                {(item.color || item.storage) && (
+                                  <div className="flex flex-wrap gap-2 mt-1">
+                                    {item.color && (
+                                      <span className="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-100">
+                                        {item.color}
+                                      </span>
+                                    )}
+                                    {item.storage && (
+                                      <span className="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-100">
+                                        {item.storage}
+                                      </span>
+                                    )}
+                                  </div>
                                 )}
                               </div>
                               <button
-                                onClick={() => removeFromCart(item.id)}
+                                onClick={() => removeFromCart(item)}
                                 className="text-gray-400 hover:text-red-500 transition-colors p-1 hover:bg-red-500/10 rounded-lg flex-shrink-0"
                               >
                                 <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -140,17 +154,17 @@ const Cart = ({ isOpen, onClose }) => {
                             <div className="mt-2 flex items-center justify-between">
                               <div className="flex items-center gap-2 sm:gap-3">
                                 <button
-                                  onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
-                                  className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-lime-500/10 text-lime-500 rounded-lg hover:bg-lime-500/20 transition-colors"
+                                  onClick={() => updateCartQuantity(item, item.quantity - 1)}
+                                  className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-emerald-100 text-emerald-600 rounded-lg hover:bg-emerald-200 transition-colors"
                                 >
                                   <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                                   </svg>
                                 </button>
-                                <span className="w-6 sm:w-8 text-center text-sm sm:text-base text-white font-medium">{item.quantity}</span>
+                                <span className="w-6 sm:w-8 text-center text-sm sm:text-base text-emerald-900 font-medium">{item.quantity}</span>
                                 <button
-                                  onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
-                                  className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-lime-500/10 text-lime-500 rounded-lg hover:bg-lime-500/20 transition-colors"
+                                  onClick={() => updateCartQuantity(item, item.quantity + 1)}
+                                  className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-emerald-100 text-emerald-600 rounded-lg hover:bg-emerald-200 transition-colors"
                                 >
                                   <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -158,9 +172,9 @@ const Cart = ({ isOpen, onClose }) => {
                                 </button>
                               </div>
                               <div className="text-right">
-                                <p className="text-sm sm:text-base text-lime-500 font-bold">${(item.price * item.quantity).toFixed(2)}</p>
+                                <p className="text-sm sm:text-base text-emerald-600 font-bold">${(item.price * item.quantity).toFixed(2)}</p>
                                 {item.quantity > 1 && (
-                                  <p className="text-xs sm:text-sm text-gray-400">${item.price.toFixed(2)} each</p>
+                                  <p className="text-xs sm:text-sm text-gray-500">${item.price.toFixed(2)} each</p>
                                 )}
                               </div>
                             </div>
@@ -170,33 +184,33 @@ const Cart = ({ isOpen, onClose }) => {
                     ))}
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-gray-400 p-6 sm:p-8">
-                    <svg className="w-12 h-12 sm:w-16 sm:h-16 mb-3 sm:mb-4 text-lime-500/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex flex-col items-center justify-center h-full text-gray-400 p-6 sm:p-8 bg-white">
+                    <svg className="w-12 h-12 sm:w-16 sm:h-16 mb-3 sm:mb-4 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
-                    <p className="text-base sm:text-lg font-medium mb-1 sm:mb-2">Your cart is empty</p>
-                    <p className="text-sm sm:text-base text-center">Add some products to your cart and they will appear here</p>
+                    <p className="text-base sm:text-lg font-medium mb-1 sm:mb-2 text-emerald-900">Your cart is empty</p>
+                    <p className="text-sm sm:text-base text-center text-gray-500">Add some products to your cart and they will appear here</p>
                   </div>
                 )}
               </div>
 
               {/* Footer */}
               {cartItems.length > 0 && (
-                <div className="flex-shrink-0 p-4 sm:p-6 border-t border-lime-500/10 bg-black/50">
+                <div className="flex-shrink-0 p-4 sm:p-6 border-t border-emerald-100 bg-white">
                   <div className="space-y-3 sm:space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm sm:text-base text-gray-400">Subtotal</span>
-                      <span className="text-sm sm:text-base text-white font-medium">${total.toFixed(2)}</span>
+                      <span className="text-sm sm:text-base text-gray-500">Subtotal</span>
+                      <span className="text-sm sm:text-base text-emerald-900 font-medium">${total.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm sm:text-base text-gray-400">Total</span>
-                      <span className="text-xl sm:text-2xl font-bold text-lime-500">${total.toFixed(2)}</span>
+                      <span className="text-sm sm:text-base text-gray-500">Total</span>
+                      <span className="text-xl sm:text-2xl font-bold text-emerald-600">${total.toFixed(2)}</span>
                     </div>
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={handleCheckout}
-                      className="w-full bg-lime-500 text-black py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-lime-400 transition-colors flex items-center justify-center gap-2 group"
+                      className="w-full bg-emerald-500 text-white py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2 group"
                     >
                       Proceed to Checkout
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
